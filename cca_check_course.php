@@ -44,12 +44,11 @@ $courseid = cli_input($prompt);
 $course = get_course($courseid);
 $coursecontext = context_course::instance($courseid);
 
-
 // First teachers
 $role = $DB->get_record('role', array('shortname' => 'editingteacher'));
 $teachers = get_role_users($role->id, $coursecontext);
 
-echo("\n== Teachers in $course->fullname ==\n");
+echo("\n== Teachers in $course->fullname (course ID $course->id) ==\n");
 foreach ($teachers as $cmember) {
     echo("$cmember->username - $cmember->firstname $cmember->lastname \n");
 }
@@ -58,23 +57,21 @@ echo("\n");
 
 // Now students
 $role = $DB->get_record('role', array('shortname' => 'student'));
+
+// Use get_role_users rather than get_enrolled_users here so we can see inactive users, if any
 $students = get_role_users($role->id, $coursecontext);
 
-echo("\n== Students in $course->fullname ==\n");
+echo("\n== Students in $course->fullname (course ID $course->id) ==\n");
 foreach ($students as $cmember) {
-    echo("$cmember->username - $cmember->firstname $cmember->lastname \n");
+	$studentstr = "";
+    $studentstr .= "$cmember->username - $cmember->firstname $cmember->lastname";
+    if (!is_enrolled($coursecontext, $cmember)) {
+    	$studentstr .= " - INACTIVE";
+    }
+    echo($studentstr . "\n");
 }
 echo "+" . count($students) . " students in this course \n\n" ;
 echo("\n");
-
-
-// Also try the get_enrolled_users() function to see whether there's
-// anyone in this course who is neither teacher nor student.
-$enrolled = get_enrolled_users($coursecontext);
-echo "+" . count($enrolled) . " users of this course \n\n";
-if (count($teachers) + count($students) != count($enrolled)) {
-    echo("There are non-teacher/non-student users in this course.");
-}
 
 echo("\n");
 
