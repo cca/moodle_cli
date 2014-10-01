@@ -58,8 +58,10 @@ echo("\n");
 // Now students
 $role = $DB->get_record('role', array('shortname' => 'student'));
 
-// Use get_role_users rather than get_enrolled_users here so we can see inactive users, if any
-$students = get_role_users($role->id, $coursecontext);
+// Use get_role_users rather than get_enrolled_users if you need to see
+// inactive users as well - get_enrolled_users filters those out.
+// $students = get_role_users($role->id, $coursecontext);
+$students = get_enrolled_users($coursecontext);
 
 echo("\n== Students in $course->fullname (course ID $course->id) ==\n");
 foreach ($students as $cmember) {
