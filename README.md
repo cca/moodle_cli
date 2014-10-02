@@ -11,3 +11,6 @@ Sanity check: If teacher count + student count does not equal the output of
 
 ## cca_check_person.php
 Prompts for a username and returns a list of all courses in which that user is currently enrolled.
+
+## cca_drop_inactive.php
+Removes the enrolment record from user_enrolments for all inactive students (true drops).
