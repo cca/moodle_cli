@@ -14,3 +14,6 @@ Prompts for a username and returns a list of all courses in which that user is c
 
 ## cca_drop_inactive.php
 Removes the enrolment record from user_enrolments for all inactive students (true drops).
+
+## cca_drop_duplicate_enrolments
+ In some cases, a student may be manually enrolled by an instructor, then later enrolled again via datatel, giving them a duplicate enrolment (same user, course, and role) but with a different enrolment type ("manual" vs "ccaroles"). The ccaenrol data importer catches these duplicates during the import stage; this script is run over the entire database and cleans up the older ones.
