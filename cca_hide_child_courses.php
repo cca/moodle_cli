@@ -1,10 +1,10 @@
 <?php
 
-// CCA custom utility script.
-// Finds all child courses and sets their visibility to zero
-
 /**
- * This script allows you to reset any local user password.
+ * CCA custom utility script.
+ * Finds all child courses and sets their visibility to zero
+ * Alternative technique for future reference:
+ * https://github.com/paulholden/moodle-local_metagroups/blob/6361548cb05135369866526a9e45b0ba0e32306c/locallib.php#L28-55
  *
  * @package    core
  * @subpackage cli
