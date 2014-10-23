@@ -58,22 +58,37 @@ echo("\n");
 // Now students
 $role = $DB->get_record('role', array('shortname' => 'student'));
 
-// Use get_role_users rather than get_enrolled_users if you need to see
-// inactive users as well - get_enrolled_users filters those out.
+// Use get_role_users rather than get_enrolled_users here so we can see inactive users, if any
 // $students = get_role_users($role->id, $coursecontext);
 $students = get_enrolled_users($coursecontext);
 
 echo("\n== Students in $course->fullname (course ID $course->id) ==\n");
 foreach ($students as $cmember) {
-	$studentstr = "";
+    $studentstr = "";
     $studentstr .= "$cmember->username - $cmember->firstname $cmember->lastname";
     if (!is_enrolled($coursecontext, $cmember)) {
-    	$studentstr .= " - INACTIVE";
+        $studentstr .= " - INACTIVE";
     }
     echo($studentstr . "\n");
 }
 echo "+" . count($students) . " students in this course \n\n" ;
 echo("\n");
+
+
+// Does this course have any child courses?
+$childcourses = array();
+$select = "enrol = 'meta' AND status = 0 AND courseid = $course->id";
+
+if ($childcourseids = $DB->get_fieldset_select('enrol', 'customint1', $select)) {
+    foreach ($childcourseids as $childcourseid) {
+        $childcourses[] = get_course($childcourseid);
+    }
+    echo("This course has " . count($childcourses) . " child courses:\n");
+    foreach ($childcourses as $course) {
+        echo("$course->id  - $course->fullname \n");
+        // echo($value);
+    }
+}
 
 echo("\n");
 
