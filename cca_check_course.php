@@ -86,7 +86,6 @@ if ($childcourseids = $DB->get_fieldset_select('enrol', 'customint1', $select)) 
     echo("This course has " . count($childcourses) . " child courses:\n");
     foreach ($childcourses as $course) {
         echo("$course->id  - $course->fullname \n");
-        // echo($value);
     }
 }
 
