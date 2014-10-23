@@ -1,8 +1,7 @@
 <?php
 
 // CCA custom utility script.
-// Prompts for a course ID and returns that course's list of students.
-
+// Finds all child courses and sets their visibility to zero
 
 /**
  * This script allows you to reset any local user password.
