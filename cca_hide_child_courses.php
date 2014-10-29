@@ -1,10 +1,11 @@
 <?php
 
+// CCA custom utility script.
+// Prompts for a course ID and returns that course's list of students.
+
+
 /**
- * CCA custom utility script.
- * Finds all child courses and sets their visibility to zero
- * Alternative technique for future reference:
- * https://github.com/paulholden/moodle-local_metagroups/blob/6361548cb05135369866526a9e45b0ba0e32306c/locallib.php#L28-55
+ * This script allows you to reset any local user password.
  *
  * @package    core
  * @subpackage cli
@@ -58,7 +59,7 @@ if (cli_input($prompt) == "y") {
             foreach ($childcourseids as $childcourseid) {
                 $childcourses[] = get_course($childcourseid);
             }
-            echo("\n\nCourse $courseid has " . count($childcourses) . " child courses:\n");
+            echo("\n\nCourse $courseid ($course->fullname) has " . count($childcourses) . " child courses:\n");
             foreach ($childcourses as $course) {
                 echo("$course->id - $course->fullname \n");
                 // Set course row with this id to have no visibility

@@ -17,3 +17,9 @@ Removes the enrolment record from user_enrolments for all inactive students (tru
 
 ## cca_drop_duplicate_enrolments
  In some cases, a student may be manually enrolled by an instructor, then later enrolled again via datatel, giving them a duplicate enrolment (same user, course, and role) but with a different enrolment type ("manual" vs "ccaroles"). The ccaenrol data importer catches these duplicates during the import stage; this script is run over the entire database and cleans up the older ones.
+
+## cca_show_meta_courses
+Detects and groups all metacourses with their child courses, printing out a reference list.
+
+## cca_hide_child_courses
+Detects and groups all metacourses with their child courses, then sets child courses to invisible. This was written as a repair script and should seldom be needed.
