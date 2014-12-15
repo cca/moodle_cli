@@ -23,3 +23,6 @@ Detects and groups all metacourses with their child courses, printing out a refe
 
 ## cca_hide_child_courses
 Detects and groups all metacourses with their child courses, then sets child courses to invisible. This was written as a repair script and should seldom be needed.
+
+## cca_unenrol_user
+Given a Moodle user ID and a Moodle course ID, unenrols that user from that course.
