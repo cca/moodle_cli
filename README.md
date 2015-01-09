@@ -29,3 +29,6 @@ Given a Moodle user ID and a Moodle course ID, unenrols that user from that cour
 
 ## cca_fix_redundant_enrol_types
 Due to an early error by a Moodle consultant, many courses had multiple sets of redundant enrolment types, e.g. two or three entries for guest enrolments, two or three for ccaroles enrolments, etc. This caused various strange errors throughout the system. This one-time fixit script detects and consolidates those entries.
+
+## cca_get_parent_course
+Asks for a Moodle course ID as input and returns the ID of the parent/metacourse, if one exists.
