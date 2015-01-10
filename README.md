@@ -32,3 +32,6 @@ Due to an early error by a Moodle consultant, many courses had multiple sets of 
 
 ## cca_get_parent_course
 Asks for a Moodle course ID as input and returns the ID of the parent/metacourse, if one exists.
+
+## cca_ensure_manual_enrols
+Enable manual and guest enrolments for all courses
