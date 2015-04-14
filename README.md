@@ -1,7 +1,7 @@
 moodle_cli
 ==========
 
-Misc command-line management scripts for Moodle. Install these (preferably via moodle_build) to `admin/cli/*`.
+Misc command-line management scripts and web interfaces for Moodle. Install these (preferably via moodle_build) to `admin/cli/*`. Install the `queries` folder to `admin/queries`.
 
 ## cca_check_course.php
 Prompts for a course ID and returns complete list of all teachers and students.
@@ -35,3 +35,7 @@ Asks for a Moodle course ID as input and returns the ID of the parent/metacourse
 
 ## cca_ensure_manual_enrols
 Enable manual and guest enrolments for all courses
+
+## queries
+Generates statistical data through a web interface accessible only to logged-in site administrators. Result columns can be sorted by clicking headers, and data can be output to .csv for further processing with pivot tables, etc.
+
