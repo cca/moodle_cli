@@ -83,7 +83,7 @@
             }
 
             echo("<p><strong>&laquo; Click column headers to sort &raquo;</strong></p>\n");
-            echo("<p><strong><a href=\"#\" id=\"dl_link\">Download as CSV</a> | <a href=\"term_summary.php\">Return</a></strong></p>");
+            echo("<p><strong><a href=\"#\" id=\"dl_link\">Download as CSV</a> | <a href=\"index.php\">Return</a></strong></p>");
             echo("<table  class=\"table table-striped sortable\" id=\"htmltable\"><thead><tr><th>Moodle ID</th><th>CCA Course ID</th><th>Category</th><th>Term</th><th>Shortname</th><th>Fullname</th><th>Teachers</th><th>Enrolled</th><th>Hits</th></tr></thead><tbody>$rowstrings</tbody></table>");
             ?>
 
