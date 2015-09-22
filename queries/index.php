@@ -11,8 +11,6 @@
 <head>
     <title></title>
     <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-    <script type="text/javascript" src="htmltable_export/tableExport.js"></script>
-    <script type="text/javascript" src="htmltable_export/jquery.base64.js"></script>
     <script type="text/javascript" src="bootstrap-sortable/moment.min.js"></script>
     <script type="text/javascript" src="bootstrap-sortable/bootstrap-sortable.js"></script>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
@@ -40,6 +38,7 @@
                 // so loop through categories in this term and get cat IDs, then for each of those,
                 // get courses.
 
+                $rowstrings = "";
                 $coursecount = 0;
                 $categories = coursecat::get($term_id)->get_children();
                 foreach ($categories as $cat) {
@@ -88,13 +87,54 @@
             ?>
 
             <script>
-                $('#dl_link').on('click', function(e){
-                        $('#htmltable').tableExport({
-                            type:'csv',
-                            escape:'false',
-                            separator: '\t'
+                $(document).ready(function () {
+
+                    function exportTableToCSV($table, filename) {
+
+                        var $rows = $table.find('tr'),
+
+                            // Temporary delimiter characters unlikely to be typed by keyboard
+                            // This is to avoid accidentally splitting the actual contents
+                            tmpColDelim = String.fromCharCode(11), // vertical tab character
+                            tmpRowDelim = String.fromCharCode(0), // null character
+
+                            // actual delimiter characters for CSV format
+                            colDelim = '\t',
+                            rowDelim = '\r\n',
+
+                            // Grab text from table into CSV formatted string
+                            csv = $rows.map(function (i, row) {
+                                var $row = $(row),
+                                    $cols = $row.find('td, th');
+
+                                return $cols.map(function (j, col) {
+                                    var $col = $(col),
+                                        text = $col.text();
+
+                                    return text.replace('"', '""'); // escape double quotes
+
+                                }).get().join(tmpColDelim);
+
+                            }).get().join(tmpRowDelim)
+                                .split(tmpRowDelim).join(rowDelim)
+                                .split(tmpColDelim).join(colDelim),
+
+                            // Data URI
+                            csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
+
+                        $(this)
+                            .attr({
+                            'download': filename,
+                                'href': csvData,
+                                'target': '_blank'
                         });
+                    }
+
+                    // This must be a hyperlink
+                    $("#dl_link").on('click', function (event) {
+                        exportTableToCSV.apply(this, [$('#htmltable'), 'moodle_stats_export.csv']);
                     });
+                });
             </script>
 
             <?php

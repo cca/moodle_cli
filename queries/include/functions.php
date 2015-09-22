@@ -59,6 +59,7 @@
     function get_html_rows($courses) {
         // print_r($courses);
         // Generate HTML table rows from an array of courses
+        $rowstring = "";
         foreach ($courses as $course) {
             $coursecontext = context_course::instance($course->id);
             $enrolnum = count_enrolled_users($coursecontext);
