@@ -21,7 +21,7 @@
 
         <?php
 
-        require(dirname(dirname(dirname(__FILE__))).'/config.php');
+        require(dirname(dirname(dirname(dirname(__FILE__)))).'/config.php');
         include_once($CFG->libdir . '/coursecatlib.php');
         include_once($CFG->libdir . '/datalib.php');
 
@@ -178,7 +178,9 @@
                 </form>
 
                 <?php
-            }
+            } else {
+                echo("<p>Please log in to Moodle first.</p>");
+            };
         }?>
 
     <div>

@@ -1,7 +1,9 @@
 moodle_cli
 ==========
 
-Misc command-line management scripts and web interfaces for Moodle. Install these (preferably via moodle_build) to `admin/cli/*`. Install the `queries` folder to `admin/queries`.
+Misc command-line management scripts and web interfaces for Moodle. Install these (preferably via moodle_build) to `admin/cli/*`. 
+
+Also includes a couple of tools with web wrappers for convenience. Put the `cca_tools` directory under `admin` and superusers will be able to access them at `yourdomain.edu/admin/cca_tools/[queries/unenroll]`.
 
 ## cca_check_course.php
 Prompts for a course ID and returns complete list of all teachers and students.
