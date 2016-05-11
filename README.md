@@ -1,9 +1,14 @@
 moodle_cli
 ==========
 
-Misc command-line management scripts and web interfaces for Moodle. Install these (preferably via moodle_build) to `admin/cli/*`. 
+Misc command-line management scripts and web interfaces for Moodle. Install these (preferably via moodle_build) to `admin/cli/*`.
 
 Also includes a couple of tools with web wrappers for convenience. Put the `cca_tools` directory under `admin` and superusers will be able to access them at `yourdomain.edu/admin/cca_tools/[queries/unenroll]`.
+
+## cca_set_cas_logins.php
+Sets all logins to type "cas" except for "guest" and "etadmin".
+Needed because Moodle's "external database enrollment" plugin sets all to "db" with no config option,
+so we run this via cron after the enroller runs.
 
 ## cca_check_course.php
 Prompts for a course ID and returns complete list of all teachers and students.
@@ -40,4 +45,3 @@ Enable manual and guest enrolments for all courses
 
 ## queries
 Generates statistical data through a web interface accessible only to logged-in site administrators. Result columns can be sorted by clicking headers, and data can be output to .csv for further processing with pivot tables, etc.
-
