@@ -17,4 +17,4 @@ for i in $elems
 done
 
 echo $usernames
-moosh -n user-delete $usernames
+/usr/local/bin/moosh -n user-delete $usernames
