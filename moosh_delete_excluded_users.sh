@@ -4,7 +4,7 @@
 # We can't control that Moodle imports all users from the POrtal users table,
 # so we delete them all later. Moosh makes this a lot easier.
 
-data=$(moosh -n user-list "username LIKE 'apply-%'")
+data=$(/usr/local/bin/moosh -n user-list "username LIKE 'apply-%'")
 elems=$(echo $data | tr "," "\n")
 usernames=""
 
