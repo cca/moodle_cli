@@ -6,15 +6,21 @@
 
 data=$(/usr/local/bin/moosh -n user-list "username LIKE 'apply-%'")
 elems=$(echo $data | tr "," "\n")
-usernames=""
+usernames=()
 
 for i in $elems
     do
         if [[ "$i" =~ ^apply-.* ]]; then
-            echo "tracking $i"
-            usernames+=" $i"
+            usernames=("${usernames[@]}" $i)
         fi
 done
 
-echo $usernames
-/usr/local/bin/moosh -n user-delete $usernames
+echo "usernames array is : "
+echo ${usernames[@]}
+
+for n in ${usernames[@]}
+    do
+        echo $n
+        echo
+        /usr/local/bin/moosh -n user-delete $n
+done
