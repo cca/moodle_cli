@@ -19,7 +19,7 @@ require_once($CFG->libdir.'/clilib.php');      // cli only functions
 
 cli_heading('Set all auth types to cas');
 
-$sql = 'update mdl_user set auth = "cas" where username != "etadmin" and username != "guest" ';
+$sql = 'update mdl_user set auth = "cas" where auth != "cas" and username != "etadmin" and username != "guest" ';
 $results = $DB->execute($sql);
 
 echo("\n");
