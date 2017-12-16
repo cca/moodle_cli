@@ -21,12 +21,13 @@
 
         <?php
 
-        require(dirname(dirname(dirname(dirname(__FILE__)))).'/config.php');
-        include_once($CFG->libdir . '/coursecatlib.php');
-        include_once($CFG->libdir . '/datalib.php');
+        require('/opt/moodle/config.php');
+        include_once('/opt/moodle/lib/coursecatlib.php');
+        include_once('/opt/moodle/lib/datalib.php');
 
         // Most of our custom lookup logic is here:
         require_once('include/functions.php');
+        global $DB;
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -52,8 +53,8 @@
                 $minhits = ($_POST["minhits"]);
 
                 // Query for active courses. Exclude the generic "Moodle" course with ID #1
-                $sql = "SELECT COUNT(l.id) hits, l.course courseId, c.fullname coursename, c.category coursecat
-                FROM mdl_log l INNER JOIN mdl_course c ON l.course = c.id
+                $sql = "SELECT COUNT(l.id) hits, l.courseid courseId, c.fullname coursename, c.category coursecat
+                FROM mdl_logstore_standard_log l INNER JOIN mdl_course c ON l.courseid = c.id
                 WHERE c.id != 1
                 GROUP BY courseId
                 HAVING COUNT(l.id) > $minhits
@@ -65,8 +66,7 @@
                 // That gives us sql results but we need real Moodle course objects.
                 // Generate new array. Missing Python's list comprehensions!
                 $courseset = array();
-                foreach ($results as $result)
-                {
+                foreach ($results as $result) {
                     $courseset[] = get_course($result->courseid);
                 }
                 $rowstrings .= get_html_rows($courseset);
