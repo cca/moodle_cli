@@ -39,22 +39,23 @@
                 // Get all children of a given category ID. We can't query for courses in subcats,
                 // so loop through categories in this term and get cat IDs, then for each of those,
                 // get courses.
-
+                $rowstrings = "";
                 $coursecount = 0;
                 $categories = coursecat::get($term_id)->get_children();
                 foreach ($categories as $cat) {
                     $courses = get_courses($cat->id);
                     $coursecount += count($courses);
-                    $rowstrings = get_html_rows($courses);
+                    $rowstrings .= get_html_rows($courses);
                 }
 
             } elseif (isset($_POST["minhits"])) {  // Most active
 
                 $minhits = ($_POST["minhits"]);
+                $rowstrings = "";
 
                 // Query for active courses. Exclude the generic "Moodle" course with ID #1
                 $sql = "SELECT COUNT(l.id) hits, l.courseid courseId, c.fullname coursename, c.category coursecat
-                FROM mdl_logstore_standard_log l INNER JOIN mdl_course c ON l.courseid = c.id
+                FROM {logstore_standard_log} l INNER JOIN {course} c ON l.courseid = c.id
                 WHERE c.id != 1
                 GROUP BY courseId
                 HAVING COUNT(l.id) > $minhits
@@ -69,7 +70,7 @@
                 foreach ($results as $result) {
                     $courseset[] = get_course($result->courseid);
                 }
-                $rowstrings = get_html_rows($courseset);
+                $rowstrings .= get_html_rows($courseset);
 
             }
 
@@ -144,7 +145,7 @@
 
                 // Query for top-level categories. Exclude the "Miscellaneous" cat which is meaningless here.
                 $sql = "SELECT id, name
-                FROM mdl_course_categories
+                FROM {course_categories}
                 WHERE depth=1
                 AND id != 1
                 ORDER BY id ASC

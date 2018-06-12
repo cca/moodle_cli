@@ -48,8 +48,8 @@
         // Get hit count for a single course.
         global $DB;
 
-        $sql = "SELECT COUNT(l.id) hits, l.course courseId, c.fullname coursename, c.category coursecat
-        FROM mdl_log l INNER JOIN mdl_course c ON l.course = c.id
+        $sql = "SELECT COUNT(l.id) hits, l.courseid courseId, c.fullname coursename, c.category coursecat
+        FROM {logstore_standard_log} l INNER JOIN {course} c ON l.courseid = c.id
         WHERE c.id = $course_id
         ";
         $results = $DB->get_record_sql($sql);
