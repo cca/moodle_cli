@@ -21,9 +21,10 @@
 
         <?php
 
-        require('/opt/moodle/config.php');
-        include_once('/opt/moodle/lib/coursecatlib.php');
-        include_once('/opt/moodle/lib/datalib.php');
+        $moodle_dir = '/opt/moodle';
+        require($moodle_dir . '/config.php');
+        include_once($moodle_dir . '/lib/coursecatlib.php');
+        include_once($moodle_dir . '/lib/datalib.php');
 
         // Most of our custom lookup logic is here:
         require_once('include/functions.php');
@@ -31,7 +32,7 @@
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            if ($_POST["term_id"]) {  // Term Summary
+            if (isset($_POST["term_id"])) {  // Term Summary
                 $term_id = ($_POST["term_id"]);
                 $term = get_catname($term_id);
 
@@ -39,16 +40,15 @@
                 // so loop through categories in this term and get cat IDs, then for each of those,
                 // get courses.
 
-                $rowstrings = "";
                 $coursecount = 0;
                 $categories = coursecat::get($term_id)->get_children();
                 foreach ($categories as $cat) {
                     $courses = get_courses($cat->id);
                     $coursecount += count($courses);
-                    $rowstrings .= get_html_rows($courses);
+                    $rowstrings = get_html_rows($courses);
                 }
 
-            } elseif ($_POST["minhits"]) {  // Most active
+            } elseif (isset($_POST["minhits"])) {  // Most active
 
                 $minhits = ($_POST["minhits"]);
 
@@ -69,15 +69,15 @@
                 foreach ($results as $result) {
                     $courseset[] = get_course($result->courseid);
                 }
-                $rowstrings .= get_html_rows($courseset);
+                $rowstrings = get_html_rows($courseset);
 
             }
 
 
-            if ($_POST["term_id"]) {
+            if (isset($_POST["term_id"])) {
                 echo("<h3>Term Summary for $term</h3>\n");
                 echo("<p>Total number of courses listed for term: <strong>$coursecount.</strong></p>\n");
-            } elseif ($_POST["minhits"]) {
+            } elseif (isset($_POST["minhits"])) {
                 echo("<h3>Most active courses</h3>\n");
             }
 
