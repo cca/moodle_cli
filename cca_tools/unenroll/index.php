@@ -17,18 +17,20 @@
 
         <?php
 
-        require(dirname(dirname(dirname(dirname(__FILE__)))).'/config.php');
-        include_once($CFG->libdir . '/coursecatlib.php');
-
+        $moodle_dir = '/opt/moodle';
+        require($moodle_dir . '/config.php');
+        include_once($moodle_dir . '/lib/coursecatlib.php');
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 $user_id = ($_POST["user_id"]);
                 $course_id = ($_POST["course_id"]);
 
-                // Need the mdl_user_enrolments_id to do the drop
-                $subsql = "select ue.id, ue.status, e.courseid from mdl_user_enrolments as ue join mdl_enrol as e on ue.enrolid=e.id " .
-                    "where e.courseid=$course_id and ue.userid=$user_id";
+                // Need the mdl_user_enrolments.id to do the drop
+                $subsql = "SELECT ue.id, ue.status, e.courseid
+                FROM {user_enrolments} AS ue
+                JOIN {enrol} as e on ue.enrolid = e.id
+                WHERE e.courseid = $course_id AND ue.userid = $user_id";
 
                 $subresults = $DB->get_records_sql($subsql);
                 foreach ($subresults as $subresult) {
