@@ -7,7 +7,7 @@
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title></title>
     <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
