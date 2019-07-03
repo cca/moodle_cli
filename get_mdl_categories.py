@@ -1,6 +1,6 @@
 import requests
 
-# https://moodle.cca.edu/webservice/rest/server.php?wstoken=6b923bfecd3e5d8d6b1b4ddf5bb4c923&wsfunction=core_course_get_categories&moodlewsrestformat=json&criteria[0][key]=name&criteria[0][value]=2019SP
+# https://moodle.cca.edu/webservice/rest/server.php?wstoken=...&wsfunction=core_course_get_categories&moodlewsrestformat=json&criteria[0][key]=name&criteria[0][value]=2019SP
 
 
 def get_mdl_categories(filter):
