@@ -1,3 +1,4 @@
+import os
 import sys
 
 import requests
@@ -40,6 +41,10 @@ def get_mdl_course_id(shortname):
         'field': 'shortname',
         'value': shortname,
     }
+
+    if os.path.exists('.token'):
+        with open('.token', 'r') as fh:
+            params['wstoken'] = fh.read().strip()
 
     response = requests.get(url, params=params)
     data = response.json()

@@ -4,9 +4,11 @@ Misc command-line management scripts and web assets for Moodle. Install these to
 
 Also includes a couple of tools with web wrappers for convenience. Put the `cca_tools` directory under `admin` and superusers will be able to access them at `moodle.cca.edu/admin/cca_tools/[queries/unenroll]`.
 
-Many of these scripts are outdated or were used one specific time in the past. The ones that are still frequently employed are dmba-cohort.sh, enrollment_cron.sh, & moosh_create_course_cats.sh.
+Many of these scripts are outdated or were used one specific time in the past. The ones that are still frequently employed (as of Summer 2019) are enrollment_cron.sh & moosh_create_course_cats.sh.
 
 ## cca_tools
+
+These are add-ons to Moodle's admin side which help us extract analytics from the software.
 
 **queries**
 
@@ -16,7 +18,21 @@ Generates statistical data through a web interface accessible only to logged-in 
 
 Unenroll a user from a class by User ID and Course ID. It is unclear why this is needed when enrollments are synced from an external database; we should prefer fixing enrollment issues upstream when possible.
 
+## API Tools
+
+These are example scripts for accessing different portions of the Moodle REST APIs. The Moodle APIs are very comprehensive but sometimes a bit tricky to use. These scripts are both examples and not intended for production use, though similar code is running in other CCA apps. The easiest way to run them is to obtain a Web Services token at https://moodle.cca.edu/admin/settings.php?section=webservicetokens for a Service with the appropriate API permissions, then save that token in a ".token" file in the root of this project. These scripts check for the existence of that file and use it as the "wstoken" parameter in API calls.
+
+**get_mdl_course_id**
+
+This script was an example provided to the Portal team during Learning Hub development so that links to Moodle course sites could be established. The Portal has moved away from having direct access to the Moodle database but Moodle course links require knowledge of Moodle's internal IDs; this script returns those IDs when given a course "shortname" of form `ANIMA-1000-1-2019FA`.
+
+**get_mdl_categories**
+
+This script was an example provided to the Integration Engineer so that a Moodle course database could be built which includes structured enrollment data with knowledge of Moodle course category IDs. This makes it so courses are added under the appropriate categories when they appear in the database. It takes a "filter" dict of course properties (e.g. `{"name": "2019SU"}`) and returns an array of all categories that match and their children.
+
 ## CLI
+
+These are various maintenance scripts meant to be run on the Moodle server. Very few of them are still in use.
 
 **cca_append_term_longname.php**
 

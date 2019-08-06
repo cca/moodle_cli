@@ -1,3 +1,6 @@
+import os
+import sys
+
 import requests
 
 # https://moodle.cca.edu/webservice/rest/server.php?wstoken=...&wsfunction=core_course_get_categories&moodlewsrestformat=json&criteria[0][key]=name&criteria[0][value]=2019SP
@@ -32,6 +35,10 @@ def get_mdl_categories(filter):
         'moodlewsrestformat': format,
     }
 
+    if os.path.exists('.token'):
+        with open('.token', 'r') as fh:
+            params['wstoken'] = fh.read().strip()
+
     # construct criteria in PHP array query string format
     # because it wouldn't be Moodle without a weird, antiquated nuance
     num_filters = 0
@@ -43,3 +50,7 @@ def get_mdl_categories(filter):
     response = requests.get(url, params=params)
     # @TODO error handling
     return response.json()
+
+# CLI use: pass semester category name on the command line
+if __name__ == "__main__":
+    print(get_mdl_categories({ "name": sys.argv[1] }))
