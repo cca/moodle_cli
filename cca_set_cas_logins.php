@@ -17,9 +17,9 @@ define('CLI_SCRIPT', true);
 require(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once($CFG->libdir.'/clilib.php');      // cli only functions
 
-cli_heading('Set all auth types to cas');
+cli_heading('Changing all users with auth type "db" to "cas" auth.');
 
-$sql = 'update mdl_user set auth = "cas" where auth != "cas" and username != "etadmin" and username != "guest" ';
+$sql = 'UPDATE mdl_user SET auth = "cas" WHERE auth = "db"';
 $results = $DB->execute($sql);
 
 echo("\n");
