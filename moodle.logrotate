@@ -1,0 +1,10 @@
+# copy this to /etc/logrotate.d/moodle
+# rotate monthly, keep logs for a year, mail me when they expire
+/var/log/moodle/*.log {
+    monthly
+    rotate 12
+    create
+    compress
+    notifempty
+    mail ephetteplace@cca.edu
+}
