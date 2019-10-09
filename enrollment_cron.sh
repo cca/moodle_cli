@@ -10,7 +10,7 @@ php () { sudo -u www-data /usr/bin/php $@; }
 
 echo "$(date) - running Moodle enrollment script"
 cd /opt/moodle
-# set "unenroll action" to "unenroll user from course"
+echo 'Setting "unenroll action" to "unenroll user from course"'
 moosh config-set unenrolaction 0 enrol_database
 # we sync users first and then enrollments
 # we enable auth db plugin to sync users, then disable it because we won't want
@@ -18,13 +18,15 @@ moosh config-set unenrolaction 0 enrol_database
 # we'll change all their accounts to CAS later
 moosh auth-manage enable db
 php auth/db/cli/sync_users.php -v | sed "/$MSG/d"
+# unfortunately sync_users.php returns 0 if it cannot access its db but this will
+# catch some other errors possibly
 SYNC_STATUS=$?
 moosh auth-manage disable db
 php admin/cca_cli/cca_set_cas_logins.php
 
 php enrol/database/cli/sync.php -v
 ENROL_STATUS=$?
-# set unenroll action _back_ to "keep user enrolled"
+echo 'Setting "unenroll action" back to "keep user enrolled"'
 moosh config-set unenrolaction 1 enrol_database
 echo "$(date) - enrollment script finished"
 
@@ -32,5 +34,5 @@ echo "$(date) - enrollment script finished"
 if [ $SYNC_STATUS -ne 0 -o $ENROL_STATUS -ne 0 ]; then
     echo "Script failure. auth/db/cli/sync_users.php status: ${SYNC_STATUS} | enrol/database/cli/sync.php status: ${ENROL_STATUS}"
     echo "Emailing ${ADMINS}"
-    mail -s 'Moodle: Enrollment Script Error' -a /var/log/moodle/enroll.log $ADMINS < echo 'See attached log file.'
+    echo 'See attached log file.' | mail -s 'Moodle: Enrollment Script Error' -a /var/log/moodle/enroll.log $ADMINS
 fi
