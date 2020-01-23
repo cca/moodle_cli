@@ -1,23 +1,25 @@
 <?php
 
+    // NOTE: returns an associative array with strings for names & usernames
     function get_instructors_for_course($courseid) {
         global $DB;
+        $instuctors = array("names" => "", "emails" => "");
 
         $course = get_course($courseid);
         $coursecontext = context_course::instance($courseid);
 
-        // Get teachers
+        // Get instructors
         $role = $DB->get_record('role', array('shortname' => 'editingteacher'));
         $teachers = get_role_users($role->id, $coursecontext);
 
-        $teacherstring = "";
-        foreach ($teachers as $teacher) {
-            $teacherstring .= "$teacher->firstname $teacher->lastname";
-            $teacherstring .= ", ";
+        foreach ($teachers as $id => $teacher) {
+            $instructors["names"] .= "$teacher->firstname $teacher->lastname, ";
+            $instructors["emails"] .= "$teacher->email, ";
         }
         // Strip trailing comma
-        $teacherstring = rtrim($teacherstring, ", ");
-        return $teacherstring;
+        $instructors["names"] = rtrim($instructors["names"], ", ");
+        $instructors["emails"] = rtrim($instructors["emails"], ", ");
+        return $instructors;
     }
 
     function get_term_for_coursecat($catid) {
@@ -43,7 +45,6 @@
         return $catrec->name;
     }
 
-
     function get_hits_for_course($course_id) {
         // Get hit count for a single course.
         global $DB;
@@ -57,7 +58,6 @@
     }
 
     function get_html_rows($courses) {
-        // print_r($courses);
         // Generate HTML table rows from an array of courses
         $rowstring = "";
         foreach ($courses as $course) {
@@ -65,10 +65,13 @@
             $enrolnum = count_enrolled_users($coursecontext);
             $coursehits = get_hits_for_course($course->id);
             $category = get_catname($course->category);
-            $teachers = get_instructors_for_course($course->id);
+            $instructors = get_instructors_for_course($course->id);
+            $names = $instructors["names"];
+            $emails = $instructors["emails"];
             $term = get_term_for_coursecat($course->category);
+            $visibility = ($course->visible == "1" ? "visible" : "hidden");
 
-            $rowstring = $rowstring . "<tr><td>$course->id</td><td>$course->idnumber</td><td>$category</td><td>$term</td><td>$course->shortname</td><td>$course->fullname</td><td>$teachers</td><td>$enrolnum</td><td>$coursehits</td></tr>\n";
+            $rowstring = $rowstring . "<tr><td>$course->id</td><td>$category</td><td>$term</td><td>$course->shortname</td><td>$course->fullname</td><td>$names</td><td>$emails</td><td>$enrolnum</td><td>$coursehits</td><td>$visibility</td></tr>\n";
         }
         return $rowstring;
     }

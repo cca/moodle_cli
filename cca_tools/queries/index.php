@@ -30,6 +30,7 @@
         require_once('include/functions.php');
         global $DB;
 
+        // Form was POSTed, get query results
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if (isset($_POST["term_id"])) {  // Term Summary
@@ -47,7 +48,6 @@
                     $coursecount += count($courses);
                     $rowstrings .= get_html_rows($courses);
                 }
-
             } elseif (isset($_POST["minhits"])) {  // Most active
 
                 $minhits = ($_POST["minhits"]);
@@ -71,9 +71,7 @@
                     $courseset[] = get_course($result->courseid);
                 }
                 $rowstrings .= get_html_rows($courseset);
-
             }
-
 
             if (isset($_POST["term_id"])) {
                 echo("<h3>Term Summary for $term</h3>\n");
@@ -84,62 +82,12 @@
 
             echo("<p><strong>&laquo; Click column headers to sort &raquo;</strong></p>\n");
             echo("<p><strong><a href=\"#\" id=\"dl_link\">Download as CSV</a> | <a href=\"index.php\">Return</a></strong></p>");
-            echo("<table  class=\"table table-striped sortable\" id=\"htmltable\"><thead><tr><th>Moodle ID</th><th>CCA Course ID</th><th>Category</th><th>Term</th><th>Shortname</th><th>Fullname</th><th>Teachers</th><th>Enrolled</th><th>Hits</th></tr></thead><tbody>$rowstrings</tbody></table>");
+            echo("<table  class=\"table table-striped sortable\" id=\"htmltable\"><thead><tr><th>Moodle ID</th><th>Category</th><th>Term</th><th>Shortname</th><th>Fullname</th><th>Instructors</th><th>Instructor Emails</th><th>Enrolled</th><th>Hits</th><th>Visibility</th></tr></thead><tbody>$rowstrings</tbody></table>");
             ?>
 
-            <script>
-                $(document).ready(function () {
-
-                    function exportTableToCSV($table, filename) {
-
-                        var $rows = $table.find('tr'),
-
-                            // Temporary delimiter characters unlikely to be typed by keyboard
-                            // This is to avoid accidentally splitting the actual contents
-                            tmpColDelim = String.fromCharCode(11), // vertical tab character
-                            tmpRowDelim = String.fromCharCode(0), // null character
-
-                            // actual delimiter characters for CSV format
-                            colDelim = '\t',
-                            rowDelim = '\r\n',
-
-                            // Grab text from table into CSV formatted string
-                            csv = $rows.map(function (i, row) {
-                                var $row = $(row),
-                                    $cols = $row.find('td, th');
-
-                                return $cols.map(function (j, col) {
-                                    var $col = $(col),
-                                        text = $col.text();
-
-                                    return text.replace('"', '""'); // escape double quotes
-
-                                }).get().join(tmpColDelim);
-
-                            }).get().join(tmpRowDelim)
-                                .split(tmpRowDelim).join(rowDelim)
-                                .split(tmpColDelim).join(colDelim),
-
-                            // Data URI
-                            csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
-
-                        $(this)
-                            .attr({
-                            'download': filename,
-                                'href': csvData,
-                                'target': '_blank'
-                        });
-                    }
-
-                    // This must be a hyperlink
-                    $("#dl_link").on('click', function (event) {
-                        exportTableToCSV.apply(this, [$('#htmltable'), 'moodle_stats_export.csv']);
-                    });
-                });
-            </script>
-
-            <?php
-
+            <script src="export-to-csv.js"></script>
+        <?php
+        // Form not POSTed, show it if we're an admin user
         } else {
             if (is_siteadmin()){  // Superusers only
 
@@ -183,7 +131,6 @@
                 echo("<p>Please log in to Moodle first.</p>");
             };
         }?>
-
     <div>
 </body>
 </html>
