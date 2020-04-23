@@ -21,7 +21,7 @@
 
         <?php
 
-        $moodle_dir = '/opt/moodle';
+        $moodle_dir = '/opt/moodle38';
         require($moodle_dir . '/config.php');
         include_once($moodle_dir . '/lib/coursecatlib.php');
         include_once($moodle_dir . '/lib/datalib.php');
