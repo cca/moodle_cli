@@ -20,7 +20,7 @@ def get_mdl_categories(filter):
     fields are: id, name, parent, coursecount, visible, timemodified, depth, path*
 
     * `path` looks like /{{parent ID}}/{{category ID}} so it's an effective way
-    to find where a category lies in the hierarchy. Thie list above is only the
+    to find where a category lies in the hierarchy. The list above is only the
     useful fields. To see the full set, look at a returned value. A few fields
     are empty or unused like "idnumber" and "description".
     """
