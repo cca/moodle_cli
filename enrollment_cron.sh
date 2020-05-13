@@ -5,7 +5,7 @@ set -o pipefail
 ADMINS="ephetteplace@cca.edu,bobbywhite@cca.edu,nlammiller@cca.edu"
 # we will silence this auth db plugin message (else enroll.log fills up)
 MSG="user with this username was already created through 'cas' plugin."
-moosh () { sudo -u www-data /usr/local/bin/moosh $@; }
+moosh () { sudo /usr/local/bin/moosh -n $@; }
 php () { sudo -u www-data /usr/bin/php $@; }
 
 echo "$(date) - running Moodle enrollment script"
