@@ -17,7 +17,7 @@ moosh config-set unenrolaction 0 enrol_database
 # people actually signing in via external database
 # we'll change all their accounts to CAS later
 moosh auth-manage enable db
-php admin/tool/task/cli/schedule_task.php --execute='\auth_db\task\sync_users'
+php admin/tool/task/cli/schedule_task.php --execute='\auth_db\task\sync_users' | sed "/$MSG/d"
 # unfortunately sync_users.php returns 0 if it cannot access its db but this will
 # catch some other errors possibly
 SYNC_STATUS=$?
