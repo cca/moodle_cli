@@ -9,7 +9,7 @@ moosh () { sudo /usr/local/bin/moosh -n $@; }
 php () { sudo -u www-data /usr/bin/php $@; }
 
 echo "$(date) - running Moodle enrollment script"
-cd /opt/moodle
+cd /opt/moodle38
 echo 'Setting "unenroll action" to "unenroll user from course"'
 moosh config-set unenrolaction 0 enrol_database
 # we sync users first and then enrollments
