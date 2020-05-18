@@ -3,8 +3,9 @@ import sys
 
 import requests
 
-# https://moodle.cca.edu/webservice/rest/server.php?wstoken=...&wsfunction=core_course_get_courses_by_field&moodlewsrestformat=json&criteria[0][key]=shortname&criteria[0][value]=EXCHG-3740-1-2019FA
+import config
 
+# https://moodle.cca.edu/webservice/rest/server.php?wstoken=...&wsfunction=core_course_get_courses_by_field&moodlewsrestformat=json&criteria[0][key]=shortname&criteria[0][value]=EXCHG-3740-1-2019FA
 
 def get_mdl_course_id(shortname):
     """ find out Moodle's internal ID for a course (so you can link to it)
@@ -30,10 +31,10 @@ def get_mdl_course_id(shortname):
 
         CERAM-1000-1-CERAM-2700-2-CERAM-3700-2-CRAFT-2700-3-2019FA
     """
-    url = 'https://moodle.cca.edu/webservice/rest/server.php'
+    url = config.url
     params = {
         # found at https://moodle.cca.edu/admin/settings.php?section=webservicetokens
-        'wstoken': '...',
+        'wstoken': config.token,
         'wsfunction': 'core_course_get_courses_by_field',
         'moodlewsrestformat': 'json',
         # theoretically we can search using ID, a list of IDs, idnumber,
@@ -41,10 +42,6 @@ def get_mdl_course_id(shortname):
         'field': 'shortname',
         'value': shortname,
     }
-
-    if os.path.exists('.token'):
-        with open('.token', 'r') as fh:
-            params['wstoken'] = fh.read().strip()
 
     response = requests.get(url, params=params)
     data = response.json()

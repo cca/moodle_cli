@@ -3,6 +3,8 @@ import sys
 
 import requests
 
+import config
+
 # https://moodle.cca.edu/webservice/rest/server.php?wstoken=...&wsfunction=core_course_get_categories&moodlewsrestformat=json&criteria[0][key]=name&criteria[0][value]=2019SP
 
 
@@ -25,19 +27,15 @@ def get_mdl_categories(filter):
     are empty or unused like "idnumber" and "description".
     """
     # constants
-    url = 'https://moodle.cca.edu/webservice/rest/server.php'
-    token = '...' # found at https://moodle.cca.edu/admin/settings.php?section=webservicetokens
+    url = config.url
     service = 'core_course_get_categories'
     format = 'json'
     params = {
-        'wstoken': token,
+    # found at https://moodle.cca.edu/admin/settings.php?section=webservicetokens
+        'wstoken': config.token,
         'wsfunction': service,
         'moodlewsrestformat': format,
     }
-
-    if os.path.exists('.token'):
-        with open('.token', 'r') as fh:
-            params['wstoken'] = fh.read().strip()
 
     # construct criteria in PHP array query string format
     # because it wouldn't be Moodle without a weird, antiquated nuance
@@ -48,8 +46,26 @@ def get_mdl_categories(filter):
         num_filters += 1
 
     response = requests.get(url, params=params)
-    # @TODO error handling
-    return response.json()
+    data = response.json()
+
+    if data is not None:
+        if type(data) == list and len(data) == 0:
+            # not an error but didn't get any categories
+            print('No matching categories were found; check your query filter.')
+            return data
+
+        elif type(data) == dict:
+            if data.get('exception') or data.get('moodle_exception'):
+                """
+                Moodle sends HTTP 200 responses with error information in JSON, example:
+                { 'errorcode': 'criteriaerror', 'debuginfo':
+                'You can not search on this criteria: shortname', 'exception':
+                'moodle_exception', 'message': 'Missing permissions to search on
+                a criterion. (You can not search on this criteria: shortname)' }
+                """
+                return "Error: {}".format(data["message"])
+
+    return data
 
 # CLI use: pass semester category name on the command line
 if __name__ == "__main__":
