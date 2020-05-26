@@ -10,7 +10,7 @@ Many of these scripts are outdated or were used one specific time in the past. T
 
 ## API Tools
 
-These are example scripts for accessing different portions of the Moodle REST APIs. The Moodle APIs are very comprehensive but sometimes a bit tricky to use. These scripts are both examples and not intended for production use, though similar code is running in other CCA apps. The easiest way to run them is to obtain a Web Services token at https://moodle.cca.edu/admin/settings.php?section=webservicetokens for a Service with the appropriate API permissions, then save that token in a ".token" file in the root of this project. These scripts check for the existence of that file and use it as the "wstoken" parameter in API calls.
+These are example scripts for accessing different portions of the Moodle REST APIs. The Moodle APIs are very comprehensive but sometimes a bit tricky to use. These scripts are both examples and not intended for production use, though similar code is running in other CCA apps. The easiest way to run them is to obtain a Web Services token at https://moodle.cca.edu/admin/settings.php?section=webservicetokens for a Service with the appropriate API permissions, then save that token in a config.py file (see example.config.py for details) in the root of this project.
 
 **get_mdl_course_id**
 
