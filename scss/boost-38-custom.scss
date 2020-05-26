@@ -24,3 +24,8 @@ though the code given there was for 3.7 & didn't quite work  */
 .activity-navigation {
     display: none;
 }
+
+// hide Site Home menu link — Dashboard fulfills the same role
+a[data-key="home"] {
+    display: none;
+}
