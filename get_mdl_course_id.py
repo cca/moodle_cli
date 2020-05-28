@@ -5,7 +5,7 @@ import requests
 
 import config
 
-# https://moodle.cca.edu/webservice/rest/server.php?wstoken=...&wsfunction=core_course_get_courses_by_field&moodlewsrestformat=json&criteria[0][key]=shortname&criteria[0][value]=EXCHG-3740-1-2019FA
+# https://moodle.cca.edu/webservice/rest/server.php?wstoken=...&wsfunction=core_course_get_courses_by_field&moodlewsrestformat=json&field=shortname&value=EXCHG-3740-1-2019FA
 
 def get_mdl_course_id(shortname):
     """ find out Moodle's internal ID for a course (so you can link to it)
@@ -45,12 +45,12 @@ def get_mdl_course_id(shortname):
 
     response = requests.get(url, params=params)
     data = response.json()
-    courses = data.get("courses")
+    courses = data.get('courses')
 
-    if courses is not None and len(courses) > 0:
-        # theoretically this is always a single-entry array
-        return str(courses[0]["id"])
-    elif courses is not None and len(courses) == 0:
+    if type(courses) == list:
+        if len(courses) > 0:
+            # theoretically this is always a single-entry array
+            return str(courses[0]["id"])
         """
         If no course matches the shortname, there's no "exception" in the response
         and we receive a pair of empty arrays:
@@ -60,7 +60,7 @@ def get_mdl_course_id(shortname):
         handling for this situation (which will definitely occur).
         """
         return ''
-    elif data.get('exception') is not None:
+    else:
         """
         Moodle sends an HTTP 200 response back on errors with details in the JSON.
         Below are just a few examples I've run into.
