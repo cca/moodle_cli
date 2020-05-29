@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Misc command-line management scripts and web assets for Moodle. Install these to `admin/*` and ensure that their directories are listed in the .git/info/exclude file so that our Moodle git repo doesn't complain about them being untracked.",
   "scripts": {
-    "css": "cat scss/*.scss | pbcopy; open 'https://moodle38-test.cca.edu/admin/settings.php?section=themesettingboost#theme_boost_advanced'"
+    "css": "cat scss/*.scss | pbcopy; open 'https://moodle.cca.edu/admin/settings.php?section=themesettingboost#theme_boost_advanced'"
   },
   "repository": {
     "type": "git",
