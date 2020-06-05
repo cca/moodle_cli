@@ -1,0 +1,100 @@
+<br>
+<a href="https://libraries.cca.edu/"><img src="https://moodle.cca.edu/draftfile.php/26/user/draft/299714068/Libraries-teal-logo.jpg?time=1590520866912" alt="CCA Libraries Logo" width="203" height="29" class="img-responsive atto_image_button_text-bottom"></a>
+<br>
+<section id="summon-search">
+    <script type="text/javascript" src="//cca.summon.serialssolutions.com/widgets/box.js"></script>
+    <script type="text/javascript">
+        summonWidget.box({
+            "id": "s9e921990799bdbd896c26739e8a1790",
+            "endpoint": "//cca.summon.serialssolutions.com",
+            "style": {
+                "tagline": "#005776",
+                "links": "#563d82"
+            },
+            "params": {
+                "pn": 1,
+                "ho": true,
+                "myinst": "",
+                "jt": "",
+                "l": "en"
+            },
+            "tagline_text": "CCA Libraries",
+            "searchbutton_text": "Search",
+            "advanced_text": "More search options",
+            "placeholder_text": "",
+            "advanced": false,
+            "suggest": true,
+            "tagline": false,
+            "popup": false
+        });
+    </script>
+</section>
+<table id="resources-grid" class="js-resources" style="text-align: center; ">
+    <caption></caption>
+    <thead>
+        <tr>
+            <th scope="col"><a class="js-chat-link" href="https://libraries.cca.edu/about-us/about-us/ask-a-librarian/"><img src="https://moodle.cca.edu/draftfile.php/26/user/draft/299714068/librarian%20help.png" alt="librarian help icon" width="75" height="75" class="atto_image_button_text-bottom"></a><br>
+                <span style="font-weight: normal;"><sub><a class="js-chat-link" href="https://libraries.cca.edu/about-us/about-us/ask-a-librarian/">Ask a Librarian</a>&nbsp;</sub><br></span>
+            </th>
+            <th scope="col"><a href="https://libguides.cca.edu/az.php"><img src="https://moodle.cca.edu/draftfile.php/26/user/draft/299714068/noun_articles_1636953%20copy.png" alt="article databases icon" width="75" height="75" class="img-responsive atto_image_button_text-bottom"></a><br>
+                <sub style="font-weight: normal;"><a href="https://libguides.cca.edu/az.php" style="font-weight: normal;">Article Databases</a>&nbsp;</sub><br></th>
+            <th scope="col"><a href="https://libguides.cca.edu/artstor"><img src="https://moodle.cca.edu/draftfile.php/26/user/draft/299714068/artstorlogo%20copy.png" alt="artstor image library logo" width="75" height="75" class="img-responsive atto_image_button_text-bottom"></a><br>
+                <a href="https://libguides.cca.edu/artstor" style="font-weight: normal;"><sub style="font-weight: normal;">Image Library</sub></a>&nbsp;<br></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><br><a href="https://libguides.cca.edu/citations"><img src="https://moodle.cca.edu/draftfile.php/26/user/draft/299714068/noun_Asterisk_756990%20copy.png" alt="cite sources link icon" width="50" height="49" class="img-responsive atto_image_button_text-bottom"></a><br><sub><a href="https://libguides.cca.edu/citations">How to Cite Sources</a>&nbsp;</sub><br></td>
+            <td><br><a href="https://libraries.cca.edu/collections/special-collections/materials-library/"><img src="https://moodle.cca.edu/draftfile.php/26/user/draft/299714068/Materials%20Library%20logo.jpg?time=1590697221612" alt="Materials Library logo" width="128" height="75" class="img-responsive atto_image_button_text-bottom"></a><br><sub><a href="https://libraries.cca.edu/collections/special-collections/materials-library/">Materials Library</a>&nbsp;</sub><br></td>
+            <td><br><a href="http://cca.voicethread.com/"><img src="https://moodle.cca.edu/draftfile.php/26/user/draft/299714068/VTicon.png" alt="VoiceThread logo" width="75" height="74" class="img-responsive atto_image_button_text-bottom"></a><br><sub><a href="http://cca.voicethread.com/">VoiceThread</a>&nbsp;</sub><br></td>
+        </tr>
+        <tr>
+            <td><br><a href="http://cca.zoom.us/signin"><img src="https://moodle.cca.edu/draftfile.php/26/user/draft/299714068/zoomlogo2.png?time=1590697585902" alt="Zoom video conferencing logo" width="75" height="75" class="img-responsive atto_image_button_text-bottom"></a><br><sub><a href="http://cca.zoom.us/signin">Zoom</a>&nbsp;</sub><br></td>
+            <td><br><a href="https://moodle-archive.cca.edu/"><img src="https://moodle.cca.edu/draftfile.php/26/user/draft/299714068/moodle-2-569555.png" alt="Moodle icon for link to Moodle 2020 archive" width="75" height="75" class="img-responsive atto_image_button_text-bottom"></a><br><sub><a href="https://moodle-archive.cca.edu/">Moodle Archive</a>&nbsp;</sub><br></td>
+            <td><br><a href="https://portal.cca.edu/help-desk/submit/"><img src="https://moodle.cca.edu/draftfile.php/26/user/draft/299714068/noun_help_1963614%20copy.png" alt="Help Desk icon" width="75" height="75" class="img-responsive atto_image_button_text-bottom"></a><br>
+                <a href="https://portal.cca.edu/help-desk/submit/"><sub>Help Desk</sub></a><br></td>
+        </tr>
+    </tbody>
+</table>
+<script>
+    (function() {
+        // Presence API dox: https://dev.libraryh3lp.com/presence.html
+        const queue = 'cca-libraries-queue',
+            url = `https://libraryh3lp.com/presence/jid/${queue}/chat.libraryh3lp.com/text`,
+            activeStatuses = ['available', 'chat'],
+            linkElements = document.querySelectorAll('.js-chat-link'),
+            chatLink = `https://libraryh3lp.com/chat/${queue}@chat.libraryh3lp.com?skin=30238`;
+
+        fetch(url).then(r => r.text())
+            .then(status => {
+                if (activeStatuses.includes(status.trim()) && linkElements) {
+                    // we're live & ready to mingle
+                    linkElements.forEach(el => el.href = chatLink)
+                }
+            })
+            .catch(e => console.log('error fetching libraryh3lp chat status:', e))
+
+        // analytics event: click on resource
+        const trackEvent = (category, action, label) => {
+            return ga('send', 'event', {
+                eventCategory: category,
+                eventAction: action,
+                eventLabel: label,
+                transport: 'beacon'
+            })
+        }
+        // jquery hasn't loaded yet so we need to use vanilla JS
+        document.querySelectorAll('.js-resources a').forEach(el => {
+            el.addEventListener('click', event => {
+                return trackEvent('resources', el.href, el.textContent.trim())
+            })
+        })
+        // Summon form loads async so listen to parent element
+        document.querySelector('#summon-search').addEventListener('submit', (event) => {
+            if (event.target.matches('.summon-search-widget')) {
+                let q = $('.summon-search-widget input[name="q"]').val().trim()
+                return trackEvent('resources', 'Summon search', q)
+            }
+        })
+    })()
+</script>
