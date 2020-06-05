@@ -29,3 +29,19 @@ though the code given there was for 3.7 & didn't quite work  */
 a[data-key="home"] {
     display: none;
 }
+
+// resources grid on dashboard
+#resources-grid {
+    align-content: space-around;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+
+    .resources-grid__resource {
+        margin-bottom: 1em;
+        min-width: 90px;
+        width: 33%;
+    }
+}
