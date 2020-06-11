@@ -14,7 +14,9 @@ $syslibID = 4;
 $syslibUser = user_get_users_by_id(array($syslibID))[$syslibID];
 // https://docs.moodle.org/dev/Data_manipulation_API#General_concepts
 // another way to get user is $DB->get_record('user',['email' => '...'])
-$subject = "Test Moodle Email Subject";
+$subject = "Moodle Disk Space Email";
+// input is stream of df disk usage utility piped through sed to get only the
+// lines we're interested in: `df -H | sed -ne '1p;9p;9q'`
 $msg = stream_get_contents(STDIN);
 
 $status = email_to_user($syslibUser, $syslibUser, $subject, $msg);
