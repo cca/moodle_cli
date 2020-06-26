@@ -42,8 +42,12 @@ This script deletes users with usernames starting with `apply-` which the portal
 
 ## web assets
 
-**theme custom.css**
+**scss**
 
-A (very small) snippet of SCSS that just display a logo in the theme's header right now. You insert this code in the text area under Site Administration > Appearance > Themes > Boost > Advanced Settings.
+SCSS which you insert this code in the text area under Site Administration > Appearance > Themes > Boost > Advanced Settings.
 
-The SVG image here is copied from the main CCA site and then URL-encoded (# -> %23).
+We display the "CCA" logo via an SVG background image copied from the main CCA site and then URL-encoded (# -> %23).
+
+**js**
+
+We insert custom scripts into the `additionalhtml > footer` settings area. Our scripts are all under the additionalhtml directory and there is a gulp process for compiling them.
