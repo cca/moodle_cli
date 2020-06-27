@@ -5,7 +5,7 @@ if (location.pathname.match('/course/view.php')) {
         let $highlightedSection = $('.topics li.section.current')
 
         if ($highlightedSection.length === 1) {
-            name = $highlightedSection.attr('aria-label').trim()
+            let name = $highlightedSection.attr('aria-label').trim()
 
             $('#nav-drawer li').filter((idx, el) => {
                 return $(el).find('.media-body').text().trim() === name ? true : false
