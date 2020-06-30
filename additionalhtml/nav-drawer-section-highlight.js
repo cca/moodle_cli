@@ -3,7 +3,7 @@ if (location.pathname.match('/course/view.php')) {
     let d = document
     // we don't have jQuery yet so use vanilla JS
     // is there a highlighted section? find its name
-    let highlightedSection = d.querySelector('.topics li.section.current')
+    let highlightedSection = d.querySelector('.course-content li.section.current')
 
     if (highlightedSection) {
         let name = highlightedSection.ariaLabel.trim()

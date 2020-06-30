@@ -1,7 +1,5 @@
-// see https://moodle.cca.edu/admin/settings.php?section=themesettingboost#theme_boost_advanced
-
 // more emphasis on higlighted section
-.topics .current h3.sectionname {
+.current h3.sectionname {
     font-weight: bold;
 }
 
@@ -9,8 +7,9 @@
     border-left: #1177d1 8px solid;
 }
 
-/* see: https://moodle.org/mod/forum/discuss.php?d=395710
-though the code given there was for 3.7 & didn't quite work  */
+// hide course progress indicator on dashboard block
+// see: https://moodle.org/mod/forum/discuss.php?d=395710
+// though the code given there was for 3.7 & didn't quite work
 #page-my-index .block-myoverview .small,
 #page-my-index .block-myoverview .progress {
     display: none;
