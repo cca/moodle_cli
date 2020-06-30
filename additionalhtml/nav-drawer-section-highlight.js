@@ -1,24 +1,19 @@
 // run on course home pages
 if (location.pathname.match('/course/view.php')) {
-    let main = ($) => {
-        // is there a highlighted section? find its name
-        let $highlightedSection = $('.topics li.section.current')
+    let d = document
+    // we don't have jQuery yet so use vanilla JS
+    // is there a highlighted section? find its name
+    let highlightedSection = d.querySelector('.topics li.section.current')
 
-        if ($highlightedSection.length === 1) {
-            let name = $highlightedSection.attr('aria-label').trim()
+    if (highlightedSection) {
+        let name = highlightedSection.ariaLabel.trim()
 
-            $('#nav-drawer li').filter((idx, el) => {
-                return $(el).find('.media-body').text().trim() === name ? true : false
-            }).find('a').addClass('active').find('.media-body').addClass('font-weight-bold')
-        }
+        // REM: QSA => NodeList & not Array, but forEach is widely supported now
+        d.querySelectorAll('#nav-drawer li').forEach(item => {
+            if (item.querySelector('.media-body').textContent.trim() === name) {
+                item.querySelector('a').classList.add('active')
+                item.querySelector('.media-body').classList.add('font-weight-bold')
+            }
+        })
     }
-
-    // wait for jquery to be available, it sucks that both jQuery and require
-    // come after the footer HTML so we have to do this hack
-    let interval = setInterval(()=>{
-        if (jQuery) {
-            clearInterval(interval)
-            main(jQuery)
-        }
-    }, 400)
 }
