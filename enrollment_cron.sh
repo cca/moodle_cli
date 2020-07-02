@@ -36,3 +36,5 @@ if [ $SYNC_STATUS -ne 0 -o $ENROL_STATUS -ne 0 ]; then
     echo "Emailing ${ADMINS}"
     echo 'See attached log file.' | mail -s 'Moodle: Enrollment Script Error' -a /var/log/moodle/enroll.log $ADMINS
 fi
+
+echo
