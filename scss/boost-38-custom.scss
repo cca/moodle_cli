@@ -1,6 +1,10 @@
 // left-align uploaded media/videos
-.mediaplugin > div {
-    margin: inherit;
+.mediaplugin {
+    text-align: left;
+
+    > div {
+        margin: inherit;
+    }
 }
 
 // more emphasis on higlighted section
