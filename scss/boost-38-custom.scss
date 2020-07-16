@@ -1,3 +1,8 @@
+// left-align uploaded media/videos
+.mediaplugin > div {
+    margin: inherit;
+}
+
 // more emphasis on higlighted section
 .current h3.sectionname {
     font-weight: bold;
