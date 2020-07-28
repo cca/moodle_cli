@@ -3,6 +3,13 @@
 # Create course categories for a given term
 # Run this once per term at the beginning
 
+# We use a PHP script now so we can create categories complete with a predictable
+# idnumber hook for our enrollment database.
+# Note that we also could have used this script with `moosh category-config-set`
+# https://moosh-online.com/commands/#category-config-set to create idnumbers
+echo 'DO NOT USE! Run create_course_cats.php instead.'
+exit 1
+
 echo -n "Enter semester (in form '2017SU'):"
 read term
 
