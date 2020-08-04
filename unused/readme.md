@@ -49,3 +49,7 @@ Given a Moodle user ID and a Moodle course ID, unenrolls that user from that cou
 **dmba-cohort.sh**
 
 Takes a text file of usernames (one per line) named "dmba.txt" in the working directory and adds them all to the DMBA Community course. We used this once but then DMBA moved to Google Classroom so cohorts are no longer managed in Moodle.
+
+**moosh_delete_excluded_users.sh**
+
+This script deletes users with usernames starting with `apply-` which the portal creates for CCA applicants. It is no longer needed because now we sync users from the Portal Integrations server which does not included applicants. The process of importing and then deleting applicant users proved problematic because Moodle's database doesn't truly remove the user tuple, they slowly build up and balloon the database so much that user operations begin to slow down.
