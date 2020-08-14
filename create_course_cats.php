@@ -17,7 +17,6 @@ define('CLI_SCRIPT', true);
 require('/opt/moodle38/config.php');
 // https://github.com/moodle/moodle/blob/MOODLE_38_STABLE/lib/clilib.php
 require_once($CFG->libdir.'/clilib.php');
-require_once($CFG->libdir.'/coursecatlib.php');
 
 $categories = array('Metacourses', 'ANIMA', 'ARCHT', 'ARTED', 'CERAM', 'COMAR', 'COMIC', 'CRAFT', 'CRITI', 'CRTSD', 'CURPR', 'DESGN', 'DIVSM', 'DIVST', 'DSMBA', 'EXCHG', 'EXTED', 'FASHN', 'FILMG', 'FILMS', 'FINAR', 'FNART', 'FURNT', 'FYCST', 'GELCT', 'GLASS', 'GRAPH', 'ILLUS', 'INDIV', 'INDUS', 'INTER', 'IXDGR', 'IXDSN', 'KADZE', 'LITPA', 'MAARD', 'MARCH', 'METAL', 'MOBIL', 'PHCRT', 'PHOTO', 'PNTDR', 'PRINT', 'SCIMA', 'SCULP', 'SFMBA', 'SSHIS', 'TEXTL', 'UDIST', 'VISCR', 'VISST', 'WRITE', 'WRLIT');
 
