@@ -22,7 +22,7 @@ require_once($CFG->libdir.'/coursecatlib.php');
 $categories = array('Metacourses', 'ANIMA', 'ARCHT', 'ARTED', 'CERAM', 'COMAR', 'COMIC', 'CRAFT', 'CRITI', 'CRTSD', 'CURPR', 'DESGN', 'DIVSM', 'DIVST', 'DSMBA', 'EXCHG', 'EXTED', 'FASHN', 'FILMG', 'FILMS', 'FINAR', 'FNART', 'FURNT', 'FYCST', 'GELCT', 'GLASS', 'GRAPH', 'ILLUS', 'INDIV', 'INDUS', 'INTER', 'IXDGR', 'IXDSN', 'KADZE', 'LITPA', 'MAARD', 'MARCH', 'METAL', 'MOBIL', 'PHCRT', 'PHOTO', 'PNTDR', 'PRINT', 'SCIMA', 'SCULP', 'SFMBA', 'SSHIS', 'TEXTL', 'UDIST', 'VISCR', 'VISST', 'WRITE', 'WRLIT');
 
 $prompt = "Semester category (e.g. 2020FA)";
-$semester_str = cli_input($prompt);
+$semester_str = trim(cli_input($prompt));
 if (!strlen($semester_str)) {
     cli_error('Empty semester string, exiting without creating any course categories.');
 }
