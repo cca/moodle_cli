@@ -1,33 +1,11 @@
 <section id="summon-search">
     <br>
     <a href="https://libraries.cca.edu/"><img src="https://libraries.cca.edu/media/images/Libraries-teal-logo_cB3FpYv.original.jpg" alt="CCA Libraries Logo" width="203" height="29" class="img-responsive atto_image_button_text-bottom"></a>
-    <br>
-    <script type="text/javascript" src="//cca.summon.serialssolutions.com/widgets/box.js"></script>
-    <script type="text/javascript">
-        summonWidget.box({
-            "id": "s9e921990799bdbd896c26739e8a1790",
-            "endpoint": "//cca.summon.serialssolutions.com",
-            "style": {
-                "tagline": "#005776",
-                "links": "#563d82"
-            },
-            "params": {
-                "pn": 1,
-                "ho": true,
-                "myinst": "",
-                "jt": "",
-                "l": "en"
-            },
-            "tagline_text": "CCA Libraries",
-            "searchbutton_text": "Search",
-            "advanced_text": "More search options",
-            "placeholder_text": "",
-            "advanced": false,
-            "suggest": true,
-            "tagline": false,
-            "popup": false
-        });
-    </script>
+    <form class="form-inline" method="GET" action="https://cca.summon.serialssolutions.com">
+        <input class="form-control" type="text" name="q" placeholder="Enter search term...">
+        <input type="hidden" name="fvf" value="ContentType,Book Review,t">
+        <input class="btn btn-primary" type="submit" value="Search">
+    </form>
 </section>
 <br>
 <section id="resources-grid" class="js-resources">
