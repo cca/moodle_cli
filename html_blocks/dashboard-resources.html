@@ -2,7 +2,7 @@
     <br>
     <a href="https://libraries.cca.edu/"><img src="https://libraries.cca.edu/media/images/Libraries-teal-logo_cB3FpYv.original.jpg" alt="CCA Libraries Logo" width="203" height="29" class="img-responsive atto_image_button_text-bottom"></a>
     <form class="form-inline" method="GET" action="https://cca.summon.serialssolutions.com">
-        <input class="form-control" type="text" name="q" placeholder="Enter search term...">
+        <input class="js-query form-control" type="text" name="q" placeholder="Enter search term...">
         <input type="hidden" name="fvf" value="ContentType,Book Review,t">
         <input class="btn btn-primary" type="submit" value="Search">
     </form>
@@ -44,8 +44,9 @@
         <a href="https://portal.cca.edu/learning/learning-resources/make-appointment-coach-ACADEMIC/">LRC Coaches</a>
     </div>
     <div class="resources-grid__resource">
-        <a href="https://libguides.cca.edu/artstor"><img src="https://libraries.cca.edu/media/images/artstor.original.png" alt="artstor image library logo" width="75" height="75" class="img-responsive atto_image_button_text-bottom"></a><br>
-        <a href="https://libguides.cca.edu/artstor">Image Library</a>
+        <!-- icon: https://thenounproject.com/search/?q=collaboration&i=3152283 -->
+        <a href="https://portal.cca.edu/learning/shops-studios-labs/online_studio_resources/#software-coaching"><img src="https://libraries.cca.edu/media/images/cooperation_pobA9QI.original.png" alt="software coaches" width="75" height="75" class="img-responsive atto_image_button_text-bottom"></a><br>
+        <a href="https://libguides.cca.edu/artstor">Software Coaches</a>
     </div>
 </section>
 <script>
@@ -81,10 +82,10 @@
                 return trackEvent('resources', el.href, el.textContent.trim())
             })
         })
-        // Summon form loads async so listen to parent element
+        // track Summon queries
         document.querySelector('#summon-search').addEventListener('submit', (event) => {
             if (event.target.matches('.summon-search-widget')) {
-                let q = $('.summon-search-widget input[name="q"]').val().trim()
+                let q = $('#summon-search .js-query').val().trim()
                 return trackEvent('resources', 'Summon search', q)
             }
         })
