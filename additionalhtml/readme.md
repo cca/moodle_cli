@@ -8,7 +8,7 @@ We use the three `additionalhtml` settings (`head`, `topofbody`, `footer`) to ad
 
 `additionalhtmlfooter` is the spot for JavaScript. Note that code loaded here happens before jQuery or require.js are loaded, so we are pretty much forced to run a `setInterval` loop to wait for other resources to be available if we need them.
 
-The npm script `npm run js` will run a gulp build process over all the .js files in this directory, copy them to your clipboard, and open the appropriate Moodle settings page for you to paste into.
+The npm script `npm run js` will run a gulp build process over all the .js files in this directory, copy them to your clipboard, and open the appropriate Moodle settings page for you to paste into. You'll need to `npm install` the dependencies to do this. Also note that, since all these scripts are concatenated together, syntax errors can be generated—to be safe, end each file in a semicolon if appropriate, to prevent the already-minified ga.js file from looking like a function call.
 
 I suspect we will not find a use for `topofbody` but it's possible that that settings could be used for warnings or announcements.
 
