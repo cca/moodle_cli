@@ -25,15 +25,3 @@ This creates all the needed course categories for a term (e.g. the parent semest
 **sandbox.sh**
 
 Create a "sandbox" (test) course site for a particular CCA program. You pass the program department code, name, and optionally the username of an managing instructor to the script.
-
-## web assets
-
-**scss**
-
-SCSS which you insert this code in the text area under Site Administration > Appearance > Themes > Boost > Advanced Settings.
-
-We display the "CCA" logo via an SVG background image copied from the main CCA site and then URL-encoded (# -> %23).
-
-**js**
-
-We insert custom scripts into the `additionalhtml > footer` settings area. Our scripts are all under the additionalhtml directory and there is a gulp process for compiling them.
