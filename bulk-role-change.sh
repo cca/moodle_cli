@@ -16,6 +16,8 @@ for COURSE in ${COURSES[@]}; do
     # get all enrolled users, unenroll them, re-enroll them in the chosen role
     echo "Setting all users enrolled in course ID ${COURSE} to '${ROLE}'"
     IDS=$(moosh user-list -i --course=${COURSE})
-    moosh course-unenrol ${COURSE} ${IDS}
-    moosh course-enrol -r ${ROLE} -i ${COURSE} ${IDS}
+    if [[ -n $IDS ]]; then
+        moosh course-unenrol ${COURSE} ${IDS}
+        moosh course-enrol -r ${ROLE} -i ${COURSE} ${IDS}
+    fi
 done
