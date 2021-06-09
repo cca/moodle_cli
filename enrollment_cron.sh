@@ -8,7 +8,7 @@ MSG="user with this username was already created through 'cas' plugin."
 moosh () { /opt/moosh/moosh.php -n $@; }
 
 echo "$(date) - running Moodle enrollment script"
-cd /opt/moodle38
+cd /bitnami/moodle
 echo 'Setting "unenroll action" to "unenroll user from course"'
 moosh config-set unenrolaction 0 enrol_database
 # we sync users first and then enrollments
