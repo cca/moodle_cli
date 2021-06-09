@@ -14,8 +14,10 @@ COURSE_SHORTNAME="${DEPARTMENT_CODE}-SANDBOX"
 DEPARTMENT_NAME="$2"
 FACULTY_USERNAME="$3"
 
-moosh -n course-create --category=${SANDBOXES_CATEGORY_ID} --fullname="${DEPARTMENT_NAME} Sandbox" --idnumber="${COURSE_SHORTNAME}" "${COURSE_SHORTNAME}"
+moosh () { /opt/moosh/moosh.php -n $@; }
+
+moosh course-create --category=${SANDBOXES_CATEGORY_ID} --fullname="${DEPARTMENT_NAME} Sandbox" --idnumber="${COURSE_SHORTNAME}" "${COURSE_SHORTNAME}"
 
 if [ -n ${FACULTY_USERNAME} ]; then
-    moosh -n course-enrol -r editingteacher -s ${COURSE_SHORTNAME} ${FACULTY_USERNAME}
+    moosh course-enrol -r editingteacher -s ${COURSE_SHORTNAME} ${FACULTY_USERNAME}
 fi

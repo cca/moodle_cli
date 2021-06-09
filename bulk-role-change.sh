@@ -6,7 +6,7 @@
 # `moosh -n course-list` query) rather than make it take CLI arguments.
 ROLE=${MOODLE_ROLE:-exportonlyteacher}
 
-moosh () { sudo /usr/local/bin/moosh -n $@; }
+moosh () { /opt/moosh/moosh.php -n $@; }
 
 # could get all course IDs in a particular category (e.g. cat. ID = 877) with
 # `moosh -n course-list -c 877 -i`

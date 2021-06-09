@@ -5,8 +5,7 @@ set -o pipefail
 ADMINS="ephetteplace@cca.edu,bobbywhite@cca.edu,nlammiller@cca.edu"
 # we will silence this auth db plugin message (else enroll.log fills up)
 MSG="user with this username was already created through 'cas' plugin."
-moosh () { sudo /usr/local/bin/moosh -n $@; }
-php () { sudo -u www-data /usr/bin/php $@; }
+moosh () { /opt/moosh/moosh.php -n $@; }
 
 echo "$(date) - running Moodle enrollment script"
 cd /opt/moodle38
@@ -45,7 +44,7 @@ echo 'Checking users for instructors who are not in the FACULTY cohort...'
 # so we use `sed` to get only the ID number itself
 # cannot use moosh() function because SQL phrase becomes un-quoted and treated
 # as 200+ separate arguments
-USERS=$(sudo /usr/local/bin/moosh -n sql-run 'SELECT user.id FROM {user} user JOIN {role_assignments} ra ON user.id = ra.userid JOIN (SELECT * FROM {context} WHERE contextlevel = 50) context ON ra.contextid = context.id JOIN {role} role ON ra.roleid = role.id LEFT JOIN (SELECT cms.id, cms.userid FROM {cohort_members} cms JOIN {cohort} coh ON cms.cohortid = coh.id WHERE coh.name = "Faculty" OR coh.name = "Faculty Exceptions") cm ON user.id = cm.userid WHERE role.id = 3 AND cm.id IS NULL GROUP BY username ORDER BY username ASC' | sed -n "/\[id\] =>/s/ \+\[id\] => //p")
+USERS=$(/opt/moosh/moosh.php -n sql-run 'SELECT user.id FROM {user} user JOIN {role_assignments} ra ON user.id = ra.userid JOIN (SELECT * FROM {context} WHERE contextlevel = 50) context ON ra.contextid = context.id JOIN {role} role ON ra.roleid = role.id LEFT JOIN (SELECT cms.id, cms.userid FROM {cohort_members} cms JOIN {cohort} coh ON cms.cohortid = coh.id WHERE coh.name = "Faculty" OR coh.name = "Faculty Exceptions") cm ON user.id = cm.userid WHERE role.id = 3 AND cm.id IS NULL GROUP BY username ORDER BY username ASC' | sed -n "/\[id\] =>/s/ \+\[id\] => //p")
 
 if test -n "${USERS}"; then
     echo "Found $(echo "${USERS}" | wc -l) missing faculty."
