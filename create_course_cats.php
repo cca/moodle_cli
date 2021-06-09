@@ -14,7 +14,8 @@
 
 define('CLI_SCRIPT', true);
 
-require('/opt/moodle38/config.php');
+// assume we are two dirs deep, e.g., ${moodle}/admin/cca_cli
+require('../../config.php');
 // https://github.com/moodle/moodle/blob/MOODLE_38_STABLE/lib/clilib.php
 require_once($CFG->libdir.'/clilib.php');
 
