@@ -6,7 +6,7 @@
 # `moosh -n course-list` query) rather than make it take CLI arguments.
 ROLE=${MOODLE_ROLE:-exportonlyteacher}
 # default to Course Templates > Program Templates category
-CATEGORY=${MOODLE_CATEGORY:877}
+CATEGORY=${MOODLE_CATEGORY:-877}
 
 moosh () { sudo /usr/local/bin/moosh -n $@; }
 
