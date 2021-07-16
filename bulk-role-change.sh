@@ -5,12 +5,12 @@
 # easiest to just edit this script to do the role/courses list (e.g. using a
 # `moosh -n course-list` query) rather than make it take CLI arguments.
 ROLE=${MOODLE_ROLE:-exportonlyteacher}
+# default to Course Templates > Program Templates category
+CATEGORY=${MOODLE_CATEGORY:877}
 
 moosh () { /opt/moosh/moosh.php -n $@; }
 
-# could get all course IDs in a particular category (e.g. cat. ID = 877) with
-# `moosh -n course-list -c 877 -i`
-COURSES=$(moosh course-list -c 877 -i)
+COURSES=$(moosh course-list -c ${CATEGORY} -i)
 
 for COURSE in ${COURSES[@]}; do
     # get all enrolled users, unenroll them, re-enroll them in the chosen role
