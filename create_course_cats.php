@@ -28,7 +28,7 @@ if (!strlen($semester_str)) {
     cli_error('Empty semester string, exiting without creating any course categories.');
 }
 
-cli_writeln('Creating course cateogories for ' . $semester_str . ' semester');
+cli_writeln('Creating course categories for ' . $semester_str . ' semester');
 
 // create semester, we need to know its ID to create its children
 $data = new stdClass();
