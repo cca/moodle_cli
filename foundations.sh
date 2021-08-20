@@ -25,6 +25,7 @@ create_course () {
         --fullname="${SURNAME} Sandbox" \
         --idnumber=${COURSE_ID} ${COURSE_ID}
     moosh -n course-enrol -r editingteacher -s ${COURSE_ID} ${USERNAME}
+    moosh -n course-enrol -s ${COURSE_ID} stest
 }
 
 # case 1: first argument is a CSV of faculty
