@@ -3,7 +3,7 @@
 # even though we had automatic backups off. This script is meant to be run from
 # a nightly cron job to clear out the largest of those backup files.
 # report: https://moodle.cca.edu/report/customsql/view.php?id=15
-moosh () { sudo /usr/local/bin/moosh -n $@; }
+moosh () { /opt/moosh/moosh.php -n $@; }
 
 FILES=$(moosh file-list -i 'filename LIKE "%.mbz" AND filesize > 104857600 AND (component = "tool_recyclebin" OR filearea = "recyclebin_course") ORDER BY filesize DESC')
 

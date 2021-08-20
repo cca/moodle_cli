@@ -8,7 +8,7 @@ ROLE=${MOODLE_ROLE:-exportonlyteacher}
 # default to Course Templates > Program Templates category
 CATEGORY=${MOODLE_CATEGORY:-877}
 
-moosh () { sudo /usr/local/bin/moosh -n $@; }
+moosh () { /opt/moosh/moosh.php -n $@; }
 
 COURSES=$(moosh course-list -c ${CATEGORY} -i)
 
