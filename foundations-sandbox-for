@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# usage:
+#   ./foundations-sandbox-for.sh $USERNAME
+# 1) create a sandbox course under the Miscellaneous > Sandbox category
+# 2) enroll $USERNAME in it as instructor
+# 3) enroll stest in it as student
+SANDBOX_CATEGORY=872
+USERNAME="$1"
+# https://moosh-online.com/commands/#course-create
+# Final line of output will be the new course's ID
+# Will _not_ recreate existing course (-r flag) but will re-enroll below
+COURSE=$(moosh -n course-create -c $SANDBOX_CATEGORY -f "Foundations Sanbox - $USERNAME" -i "SANDBOX-$USERNAME" -r "SANDBOX-$USERNAME" | tail -n1)
+# https://moosh-online.com/commands/#course-enrol
+moosh -n course-enrol -r editingteacher -i $COURSE $USERNAME
+moosh -n course-enrol $COURSE stest # default role is student
