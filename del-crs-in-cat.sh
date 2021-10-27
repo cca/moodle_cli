@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # delete all courses in a category, usage:
 # ./del-crs-in-cat.sh $CATEGORY_NAME
-moosh () { /opt/moosh/moosh.php -n $@; }
+moosh () { /usr/bin/moosh -n $@; }
 
 if [[ -n $1 ]]; then
     CATEGORY=$(moosh category-list $1 | tail -n1 | cut -d ' ' -f 1)

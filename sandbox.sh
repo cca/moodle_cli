@@ -14,7 +14,7 @@ COURSE_SHORTNAME="${DEPARTMENT_CODE}-SANDBOX"
 DEPARTMENT_NAME="$2"
 FACULTY_USERNAME="$3"
 
-moosh () { /opt/moosh/moosh.php -n $@; }
+moosh () { /usr/bin/moosh -n $@; }
 
 moosh course-create --category=${SANDBOXES_CATEGORY_ID} --fullname="${DEPARTMENT_NAME} Sandbox" --idnumber="${COURSE_SHORTNAME}" "${COURSE_SHORTNAME}"
 
