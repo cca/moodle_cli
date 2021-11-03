@@ -2,15 +2,16 @@
 
 if [[ "$1" = "-h" || "$1" =~ "-help" || -z "$1" ]]; then
     echo -e "Create sandbox course for faculty enrolled in Moodle Foundations.
+
 Usage:
     ./foundations.sh faculty.csv
-    ./foundations.sh USERNAME SURNAME
+    ./foundations.sh USERNAME [SURNAME]
 
-USERNAME is the faculty member's CCA username (not email address,
-no '@cca.edu'). SURNAME can have spaces in it but would need to
-quoted in that case, e.g., 'Van Halen'. The faculty.csv file is a
-list of these faculty username/surname pairs separated by commas,
-e.g., 'ephetteplace,Phetteplace'."
+USERNAME is the faculty member's CCA username (not email address, no
+'@cca.edu'). SURNAME can have spaces in it but would need to quoted in that
+case, e.g., 'Van Halen'. If you don't provide a surname then it defaults to
+the USERNAME. The faculty.csv file is a list of these faculty username &
+surname pairs separated by commas, e.g., 'ephetteplace,Phetteplace'."
     exit 0
 fi
 
@@ -19,10 +20,13 @@ SANDBOXES_CATEGORY_ID="${MOODLE_CATEGORY:-872}"
 create_course () {
     USERNAME="$1"
     SURNAME="$2"
+    if [ -z ${SURNAME} ]; then
+        SURNAME=${USERNAME}
+    fi
     COURSE_ID="SANDBOX-${USERNAME}"
     # NOTE: two instructors with the same surname will cause an error
     moosh -n course-create --category=${SANDBOXES_CATEGORY_ID} \
-        --fullname="${SURNAME} Sandbox" \
+        --fullname="${SURNAME} Practice Course" \
         --idnumber=${COURSE_ID} ${COURSE_ID}
     moosh -n course-enrol -r editingteacher -s ${COURSE_ID} ${USERNAME}
     moosh -n course-enrol -s ${COURSE_ID} stest
