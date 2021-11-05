@@ -25,11 +25,11 @@ create_course () {
     fi
     COURSE_ID="SANDBOX-${USERNAME}"
     # NOTE: two instructors with the same surname will cause an error
-    moosh -n course-create --category=${SANDBOXES_CATEGORY_ID} \
+    /usr/bin/moosh -n course-create --category=${SANDBOXES_CATEGORY_ID} \
         --fullname="${SURNAME} Practice Course" \
         --idnumber=${COURSE_ID} ${COURSE_ID}
-    moosh -n course-enrol -r editingteacher -s ${COURSE_ID} ${USERNAME}
-    moosh -n course-enrol -s ${COURSE_ID} stest
+    /usr/bin/moosh -n course-enrol -r editingteacher -s ${COURSE_ID} ${USERNAME}
+    /usr/bin/moosh -n course-enrol -s ${COURSE_ID} stest
 }
 
 # case 1: first argument is a CSV of faculty
