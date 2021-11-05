@@ -8,6 +8,9 @@ cd /bitnami/moodle
 STUDENTS=$(/usr/bin/moosh -n user-list --course 2116 --course-role student \
     | cut -f 1 -d ' ' | sed -E '/^(s|f)test1?$/d')
 
+TZ=America/Los_Angeles date
+echo "Creating practice courses for Moodle Foundations. There are" $(echo ${STUDENTS} | wc -w) "students."
+
 for STUDENT in ${STUDENTS}; do
     /bitnami/moodle/admin/cca_cli/foundations.sh ${STUDENT}
 done

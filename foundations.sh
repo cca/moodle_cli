@@ -27,9 +27,10 @@ create_course () {
     # NOTE: two instructors with the same surname will cause an error
     /usr/bin/moosh -n course-create --category=${SANDBOXES_CATEGORY_ID} \
         --fullname="${SURNAME} Practice Course" \
-        --idnumber=${COURSE_ID} ${COURSE_ID}
-    /usr/bin/moosh -n course-enrol -r editingteacher -s ${COURSE_ID} ${USERNAME}
-    /usr/bin/moosh -n course-enrol -s ${COURSE_ID} stest
+        --idnumber=${COURSE_ID} ${COURSE_ID} 2>/dev/null \
+        && /usr/bin/moosh -n course-enrol -r editingteacher -s ${COURSE_ID} ${USERNAME} \
+        && /usr/bin/moosh -n course-enrol -s ${COURSE_ID} stest \
+        && echo "Successfully created practice course for ${USERNAME}"
 }
 
 # case 1: first argument is a CSV of faculty
