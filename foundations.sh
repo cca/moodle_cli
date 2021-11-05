@@ -15,7 +15,7 @@ surname pairs separated by commas, e.g., 'ephetteplace,Phetteplace'."
     exit 0
 fi
 
-SANDBOXES_CATEGORY_ID="${MOODLE_CATEGORY:-872}"
+SANDBOXES_CATEGORY_ID="${MOODLE_CATEGORY:-1115}"
 
 create_course () {
     USERNAME="$1"
