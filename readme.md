@@ -24,11 +24,11 @@ Sets all logins to type `cas` except for the "guest" and "etadmin" users. Needed
 
 ### create_course_cats.php
 
-This creates all the needed course categories for a term (e.g. the parent semester category and then all the children departmental categories as well as the "Metacourses" category), with a prompt asking you to specify the term on the command line. We run this once per term a few months before it begins; it is a prerequisite to the term being added to the `MOODLE_ENROLLER_TERMS` setting on the portal integrations server which, in turn, serves as our external enrollments database.
+This creates all the needed course categories for a term (e.g. the parent semester category and then all the children departmental categories as well as the "Metacourses" category), with a prompt asking you to specify the term on the command line. We run this once per term a few months before it begins; it is a prerequisite to the term being added to the `MOODLE_ENROLLER_TERMS` setting on the CCA Integrations project which populates our external enrollments database.
 
 ### enrollment_cron.sh
 
-Cron calls this script which in turns uses a few moosh commands, the auth/db/cli/sync_users.php script, and the enrol/database/cli/sync.php script to sync our enrollments with the external enrollments database.
+Cron calls this script which uses a few `moosh` commands, the auth/db/cli/sync_users.php script, and the enrol/database/cli/sync.php script to sync our enrollments with the external enrollments database.
 
 ### foundations_cron.sh
 
@@ -36,7 +36,7 @@ Meant to run nightly, creates practice courses for everyone enrolled in the Mood
 
 ### foundations.sh
 
-Create a Moodle Foundations "practice courses" for faculty members. The script has two modes: you can pass it a username and surname for it to create a single practice course or you can pass it a CSV of username/surname pairs to create a set of them. The username is used in the shortname so duplicates are not created; the surname is used in the course title and, if not provided, it defaults back to the username.
+Create Moodle Foundations "practice courses" for faculty members. The script has two modes: you can pass it a username and surname for it to create a single practice course or you can pass it a CSV of username/surname pairs to create a set of them. The username is used in the shortname so duplicates are not created; the surname is used in the course title and, if not provided, it defaults back to the username.
 
 ### sandbox.sh
 
@@ -44,4 +44,4 @@ Create a "sandbox" (test) course site for a particular CCA program. You pass the
 
 ### set_course_date.sh
 
-Set the start (first argument) & end (second argument) date for all courses within a category. Both arguments should be UNIX timestamps. This script is useful for updating the dates of template courses for the next semester. If you want to enforce an end date for a whole semester (or other category), use the `moosh -n course-config-set category ${CATEGORY} enddate ${END}` command.
+Set the start (first argument) & end (second argument) date for all courses within a category (the `CATEGORY` environment variable, which defaults to 877 for the Program Templates category). Both arguments should be UNIX timestamps. This script is useful for updating the dates of template courses for the next semester. If you want to enforce an end date for a whole semester (or other category), use the `moosh -n course-config-set category ${CATEGORY} enddate ${END}` command.
