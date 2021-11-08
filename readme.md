@@ -1,10 +1,6 @@
 # CCA Moodle customizations
 
-Misc command-line management scripts and web assets for Moodle. Install these to `admin/*` and ensure that their directories are listed in the .git/info/exclude file so that our Moodle git repo doesn't complain about them being untracked.
-
-The moodle.logrotate file configures how logrotate handles Moodle's logs (cron.log and enroll.log) and should be copied to /etc/logrotate.d/moodle.
-
-Many of these scripts are outdated or were used one specific time in the past. The ones that are still frequently employed (as of Fall 2019) are enrollment_cron.sh, cca_set_cas_logins, & create_course_cats.php (which creates categories with a structured `idnumber` while the older moosh_create_course_cats.sh does not).
+Misc command-line management scripts and web assets for Moodle. Install these to `${MOODLE_ROOT}/admin/cca_cli`. Many of these scripts are outdated or were used one specific time in the past. The ones that are still frequently employed are listed below.
 
 ## Cronjobs on Kubernetes
 
