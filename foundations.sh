@@ -24,13 +24,28 @@ create_course () {
         SURNAME=${USERNAME}
     fi
     COURSE_ID="SANDBOX-${USERNAME}"
-    # NOTE: two instructors with the same surname will cause an error
-    /usr/bin/moosh -n course-create --category=${SANDBOXES_CATEGORY_ID} \
+
+    # create a course & store the created ID number, which we have to `grep`
+    # for because moosh includes error text in stdout
+    ID=$(/usr/bin/moosh -n course-create --category=${SANDBOXES_CATEGORY_ID} \
         --fullname="${SURNAME} Practice Course" \
-        --idnumber=${COURSE_ID} ${COURSE_ID} 2>/dev/null \
-        && /usr/bin/moosh -n course-enrol -r editingteacher -s ${COURSE_ID} ${USERNAME} \
+        --idnumber=${COURSE_ID} ${COURSE_ID} 2>/dev/null | grep -x '^[0-9]*$')
+
+    # if we created a new course, configure it
+    if [ $? -a -n "${ID}" ]; then
+        echo "Created course ${ID} '${SURNAME} Practice Course'"
+        # enrol user as instructor and a test student
+        # set the course start date to the past, no end date, & make it visible
+        # 1628406000 => 2021-08-08 00:00 PT
+        /usr/bin/moosh -n course-enrol -r editingteacher -s ${COURSE_ID} ${USERNAME} \
         && /usr/bin/moosh -n course-enrol -s ${COURSE_ID} stest \
-        && echo "Successfully created practice course for ${USERNAME}"
+        && /usr/bin/moosh -n course-config-set course ${ID} startdate 1628406000 \
+        && /usr/bin/moosh -n course-config-set course ${ID} enddate 0 \
+        && /usr/bin/moosh -n course-config-set course ${ID} visible 1 \
+        && echo "Successfully created & configured practice course for ${USERNAME}"
+    else
+        echo "Did not create practice course for ${USERNAME}"
+    fi
 }
 
 # case 1: first argument is a CSV of faculty
