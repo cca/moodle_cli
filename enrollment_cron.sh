@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 export PATH="/opt/bitnami/php/bin:$PATH"
+export TZ="America/Los_Angeles"
 
 # pipe fails if any command in it fails (needed for sync_users | sed cmd)
 set -o pipefail

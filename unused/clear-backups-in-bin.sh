@@ -7,7 +7,7 @@ moosh () { /usr/bin/moosh -n $@; }
 
 FILES=$(moosh file-list -i 'filename LIKE "%.mbz" AND filesize > 104857600 AND (component = "tool_recyclebin" OR filearea = "recyclebin_course") ORDER BY filesize DESC')
 
-echo $(date "+%Y-%m-%d %H:%M") 'Deleting the backup files in the recycle bin that are >100mb'
+echo $(TZ=America/Los_Angeles date "+%Y-%m-%d %H:%M") 'Deleting the backup files in the recycle bin that are >100mb'
 for FILE in ${FILES}; do
     moosh file-delete ${FILE}
 done
