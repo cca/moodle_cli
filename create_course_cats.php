@@ -22,7 +22,7 @@ require('../../config.php');
 require_once($CFG->libdir.'/clilib.php');
 
 // Fall 2021 changes: DIVST -> ETHNC, VISST -> HAAVC, +GAMES
-$categories = array('Metacourses', 'ANIMA', 'ARCHT', 'ARTED', 'CERAM', 'COMAR', 'COMIC', 'CRAFT', 'CRITI', 'CRTSD', 'CURPR', 'DESGN', 'DSMBA', 'ETHSM', 'ETHST', 'EXCHG', 'EXTED', 'FASHN', 'FILMG', 'FILMS', 'FINAR', 'FNART', 'FURNT', 'FYCST', 'GAMES', 'GELCT', 'GLASS', 'GRAPH', 'HAAVC', 'ILLUS', 'INDIV', 'INDUS', 'INTER', 'IXDGR', 'IXDSN', 'KADZE', 'LITPA', 'MAARD', 'MARCH', 'METAL', 'MOBIL', 'PHCRT', 'PHOTO', 'PNTDR', 'PRINT', 'SCIMA', 'SCULP', 'SSHIS', 'TEXTL', 'UDIST', 'VISCR', 'WRITE', 'WRLIT');
+$categories = array('Metacourses', 'ANIMA', 'ARCHT', 'ARTED', 'CERAM', 'COMAR', 'COMIC', 'CRAFT', 'CRITI', 'CRTSD', 'CURPR', 'DESGN', 'DSMBA', 'ETHSM', 'ETHST', 'EXCHG', 'EXTED', 'FASHN', 'FILMG', 'FILMS', 'FINAR', 'FNART', 'FURNT', 'FYCST', 'GAMES', 'GELCT', 'GLASS', 'GRAPH', 'HAAVC', 'ILLUS', 'INDIV', 'INDUS', 'INTER', 'IXDGR', 'IXDSN', 'KADZE', 'LITPA', 'MAARD', 'MARCH', 'METAL', 'MOBIL', 'PHCRT', 'PHOTO', 'PNTDR', 'PRINT', 'SCIMA', 'SCULP', 'SSHIS', 'TEXTL', 'TRAVEL', 'UDIST', 'VISCR', 'WRITE', 'WRLIT');
 
 if (isset($argv[1])) {
     $semester_str = trim($argv[1]);
