@@ -18,14 +18,14 @@ moosh -n config-set unenrolaction 0 enrol_database
 # people actually signing in via external database
 # we'll change all their accounts to CAS later
 moosh -n auth-manage enable db
-php admin/cli/schedule_task.php --execute='\auth_db\task\sync_users' | sed "/$CAS_MSG/d"
+php admin/cli/scheduled_task.php --execute='\auth_db\task\sync_users' | sed "/$CAS_MSG/d"
 # unfortunately sync_users returns 0 if it cannot access the db but this might catch
 # other errors
 SYNC_STATUS=$?
 moosh -n auth-manage disable db
 php admin/cca_cli/cca_set_cas_logins.php
 
-php admin/cli/schedule_task.php --execute='\enrol_database\task\sync_enrolments' | sed "/$UN_MSG/d"
+php admin/cli/scheduled_task.php --execute='\enrol_database\task\sync_enrolments' | sed "/$UN_MSG/d"
 ENROL_STATUS=$?
 echo 'Setting "unenroll action" back to "keep user enrolled"'
 moosh -n config-set unenrolaction 1 enrol_database
