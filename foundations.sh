@@ -43,8 +43,6 @@ create_course () {
         && /usr/bin/moosh -n course-config-set course ${ID} enddate 0 \
         && /usr/bin/moosh -n course-config-set course ${ID} visible 1 \
         && echo "Successfully created & configured practice course for ${USERNAME}"
-    else
-        echo "Did not create practice course for ${USERNAME}"
     fi
 }
 
