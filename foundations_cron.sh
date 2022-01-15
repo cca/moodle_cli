@@ -2,6 +2,8 @@
 # Create practice courses, using the foundations.sh script, for all students
 # enrolled in the Moodle Foundations (id=2116) course.
 # Run on a nightly schedule
+export PATH="/opt/bitnami/php/bin:$PATH"
+export TZ="America/Los_Angeles"
 cd /bitnami/moodle
 # List of student usernames, ignoring test accounts
 # NOTE: `sed` must use extended regular expressions (-E)
