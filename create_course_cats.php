@@ -10,18 +10,17 @@
  *
  * @package    core
  * @subpackage cli
- * @copyright  2020 CCA (https://cca.edu)
+ * @copyright  2022 CCA (https://cca.edu)
  * @license    https://opensource.org/licenses/ECL-2.0 ECL 2.0
  */
 
 define('CLI_SCRIPT', true);
 
-// assume we are two dirs deep, e.g., ${moodle}/admin/cca_cli
-require('../../config.php');
-// https://github.com/moodle/moodle/blob/MOODLE_38_STABLE/lib/clilib.php
+// Bitnami container config is in a consistent place
+require('/bitnami/moodle/config.php');
+// https://github.com/moodle/moodle/blob/MOODLE_310_STABLE/lib/clilib.php
 require_once($CFG->libdir.'/clilib.php');
 
-// Fall 2021 changes: DIVST -> ETHNC, VISST -> HAAVC, +GAMES
 $categories = array('Metacourses', 'ANIMA', 'ARCHT', 'ARTED', 'CERAM', 'COMAR', 'COMIC', 'CRAFT', 'CRITI', 'CRTSD', 'CURPR', 'DESGN', 'DSMBA', 'ETHSM', 'ETHST', 'EXCHG', 'EXTED', 'FASHN', 'FILMG', 'FILMS', 'FINAR', 'FNART', 'FURNT', 'FYCST', 'GAMES', 'GELCT', 'GLASS', 'GRAPH', 'HAAVC', 'ILLUS', 'INDIV', 'INDUS', 'INTER', 'IXDGR', 'IXDSN', 'KADZE', 'LITPA', 'MAARD', 'MARCH', 'METAL', 'MOBIL', 'PHCRT', 'PHOTO', 'PNTDR', 'PRINT', 'SCIMA', 'SCULP', 'SSHIS', 'TEXTL', 'TRAVL', 'UDIST', 'VISCR', 'WRITE', 'WRLIT');
 
 if (isset($argv[1])) {
