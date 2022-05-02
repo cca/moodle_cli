@@ -5,8 +5,8 @@ usage () {
     echo -e 'Usage:\n\t./enroll_in_all.sh $SEMESTER $PROGRAM $USER [ $ROLE ]\n'
     echo -e 'Examples:\n\t./enroll_in_all.sh 2022SP GAMES ephetteplace'
     echo -e '\t./enroll_in_all.sh 2022FA ANIMA nchan exportonlyteacher\n'
-    echo 'ROLE defaults to editingteacher if not provided.'
-    echo 'All other arguments are required.'
+    echo 'ROLE defaults to editingteacher if not provided. All other arguments are required.'
+    echo 'Note that this script only works for regular courses with correctly formatted shortnames, but that does include metacourses.'
 }
 
 if [[ -z ${1} || ${1} = "-h" || ${1} = "--help" || ${1} = "help" ]]; then
@@ -31,6 +31,10 @@ export PATH=${PATH}:/usr/bin
 
 echo "Enrolling user ${USER} in all ${SEMESTER} ${PROGRAM} courses with role ${ROLE}"
 
-for course in $(moosh -n course-list -i "shortname LIKE \"%${PROGRAM}%\"-${SEMESTER}"); do
+for course in $(moosh -n course-list -i "shortname LIKE \"%${PROGRAM}%-${SEMESTER}\""); do
     moosh -n course-enrol -r ${ROLE} ${course} ${USER}
+    if [[ $? -ne 0 ]];then
+        echo "Above error was with course number $course"
+        echo "https://moodle.cca.edu/course/view.php?id=$course"
+    fi
 done
