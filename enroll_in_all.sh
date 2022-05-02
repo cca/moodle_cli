@@ -32,8 +32,9 @@ export PATH=${PATH}:/usr/bin
 echo "Enrolling user ${USER} in all ${SEMESTER} ${PROGRAM} courses with role ${ROLE}"
 
 for course in $(moosh -n course-list -i "shortname LIKE \"%${PROGRAM}%-${SEMESTER}\""); do
-    moosh -n course-enrol -r ${ROLE} ${course} ${USER}
-    if [[ $? -ne 0 ]];then
+    message=$(moosh -n course-enrol -r ${ROLE} ${course} ${USER})
+    if [[ -z ${message} ]]; then
+        echo ${message}
         echo "Above error was with course number $course"
         echo "https://moodle.cca.edu/course/view.php?id=$course"
     fi
