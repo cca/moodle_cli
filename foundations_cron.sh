@@ -16,3 +16,6 @@ echo "Creating practice courses for Moodle Foundations. There are" $(echo ${STUD
 for STUDENT in ${STUDENTS}; do
     /bitnami/moodle/admin/cca_cli/foundations.sh ${STUDENT}
 done
+
+# see note at bottom of enrollment_cron.sh for explanation
+find /opt/moodledata -user root -exec chown daemon {} \;

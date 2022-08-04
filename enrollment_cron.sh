@@ -51,5 +51,10 @@ else
     echo 'No users missing from Faculty cohort.'
 fi
 
+# we run this script as root but it touches files in Moodle's data dir
+# and then later the application cannot interact with those files, so
+# below we reset the ownership of all files in the data directory
+find /opt/moodledata -user root -exec chown daemon {} \;
+
 echo "$(date) - enrollment script finished"
 echo
