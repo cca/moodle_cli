@@ -19,14 +19,10 @@ moosh -n config-set unenrolaction 0 enrol_database
 # we'll change all their accounts to CAS later
 moosh -n auth-manage enable db
 php admin/cli/scheduled_task.php --execute='\auth_db\task\sync_users' | sed "/$CAS_MSG/d"
-# unfortunately sync_users returns 0 if it cannot access the db but this might catch
-# other errors
-SYNC_STATUS=$?
 moosh -n auth-manage disable db
 php admin/cca_cli/cca_set_cas_logins.php
 
 php admin/cli/scheduled_task.php --execute='\enrol_database\task\sync_enrolments' | sed "/$UN_MSG/d"
-ENROL_STATUS=$?
 echo 'Setting "unenroll action" back to "keep user enrolled"'
 moosh -n config-set unenrolaction 1 enrol_database
 
@@ -56,12 +52,4 @@ else
 fi
 
 echo "$(date) - enrollment script finished"
-
-# if either sync task failed, write a notice about it
-if [ $SYNC_STATUS -ne 0 -o $ENROL_STATUS -ne 0 ]; then
-    echo "A Moodle executed task failed."
-    echo "\auth_db\task\sync_users exit code: ${SYNC_STATUS}"
-    echo "\enrol_database\task\sync_enrolments exit code: ${ENROL_STATUS}"
-fi
-
 echo
