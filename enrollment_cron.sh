@@ -3,8 +3,6 @@
 export PATH="/opt/bitnami/php/bin:$PATH"
 export TZ="America/Los_Angeles"
 
-# pipe fails if any command in it fails (needed for sync_users | sed cmd)
-set -o pipefail
 # we silence these common but harmless errors (or else the log file fills up)
 CAS_MSG="user with this username was already created through 'cas' plugin."
 UN_MSG="error: skipping unknown user username "
