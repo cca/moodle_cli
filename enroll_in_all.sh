@@ -25,16 +25,16 @@ if [[ -z ${SEMESTER} || -z ${PROGRAM} || -z ${USER} ]]; then
     exit 1
 fi
 
-cd /bitnami/moodle
+cd /bitnami/moodle || exit
 # Ensure moosh is on PATH
 export PATH=${PATH}:/usr/bin
 
 echo "Enrolling user ${USER} in all ${SEMESTER} ${PROGRAM} courses with role ${ROLE}"
 
 for course in $(moosh -n course-list -i "shortname LIKE \"%${PROGRAM}%-${SEMESTER}\""); do
-    message=$(moosh -n course-enrol -r ${ROLE} ${course} ${USER})
-    if [[ ! -z ${message} ]]; then
-        echo ${message}
+    message=$(moosh -n course-enrol -r "${ROLE}" "${course}" "${USER}")
+    if [[ -n "${message}" ]]; then
+        echo "${message}"
         echo "Above error was with course number $course"
         echo "https://moodle.cca.edu/course/view.php?id=$course"
     fi
