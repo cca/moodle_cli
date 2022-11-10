@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Identify backups older than 1 year old and delete them
-cd /bitnami/moodle || exit
+cd /bitnami/moodle || (echo "Error: unable to cd into /bitnami/moodle, does directory exist?" >&2 || exit)
 # Ensure moosh is on PATH
 export PATH=${PATH}:/usr/bin
 echo "$(date)" "deleting backup files more than a year old"

@@ -8,10 +8,10 @@ CATEGORY=${CATEGORY:-877}
 
 moosh () { /usr/bin/moosh -n $@; }
 
-if [ -z ${START} -o -z ${END} ]; then
+if [ -z "${START}" ] || [ -z "${END}" ]; then
     echo -e 'Error: you must provide both a start and end date in UNIX timestamps. Category defaults to 877 (Program Templates). Usage example:\n\n\tCATEGORY=877 ./set-course-date.sh 1610956800 1621061940' >&2
     exit 1
 fi
 
-moosh course-config-set category ${CATEGORY} startdate ${START}
-moosh course-config-set category ${CATEGORY} enddate ${END}
+moosh course-config-set category "${CATEGORY}" startdate "${START}"
+moosh course-config-set category "${CATEGORY}" enddate "${END}"

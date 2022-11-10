@@ -7,7 +7,7 @@ export TZ="America/Los_Angeles"
 CAS_MSG="user with this username was already created through 'cas' plugin."
 UN_MSG="error: skipping unknown user username "
 
-cd /bitnami/moodle
+cd /bitnami/moodle || (echo "Error: unable to cd into /bitnami/moodle, does directory exist?" >&2 || exit)
 echo "$(date) - running Moodle enrollment script"
 echo 'Setting "unenroll action" to "unenroll user from course"'
 moosh -n config-set unenrolaction 0 enrol_database
@@ -43,7 +43,7 @@ USERS=$(moosh -n sql-run 'SELECT user.id FROM {user} user JOIN {role_assignments
 if test -n "${USERS}"; then
     echo "Found $(echo "${USERS}" | wc -l) missing faculty."
     for USER in ${USERS}; do
-        moosh -n cohort-enrol -u ${USER} "FACULTY"
+        moosh -n cohort-enrol -u "${USER}" "FACULTY"
     done
 else
     echo 'No users missing from Faculty cohort.'

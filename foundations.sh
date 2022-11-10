@@ -20,43 +20,42 @@ SANDBOXES_CATEGORY_ID="${MOODLE_CATEGORY:-1115}"
 create_course () {
     USERNAME="$1"
     SURNAME="$2"
-    if [ -z ${SURNAME} ]; then
-        SURNAME=${USERNAME}
+    if [ -z "${SURNAME}" ]; then
+        SURNAME="${USERNAME}"
     fi
     COURSE_ID="SANDBOX-${USERNAME}"
 
     # create a course & store the created ID number, which we have to `grep`
     # for because moosh includes error text in stdout
-    ID=$(/usr/bin/moosh -n course-create --category=${SANDBOXES_CATEGORY_ID} \
+    ID=$(/usr/bin/moosh -n course-create --category="${SANDBOXES_CATEGORY_ID}" \
         --fullname="${SURNAME} Practice Course" \
-        --idnumber=${COURSE_ID} ${COURSE_ID} 2>/dev/null | grep -x '^[0-9]*$')
+        --idnumber="${COURSE_ID}" "${COURSE_ID}" 2>/dev/null | grep -x '^[0-9]*$')
 
     # if we created a new course, configure it
-    if [ $? -a -n "${ID}" ]; then
+    if [[ $? && -n "${ID}" ]]; then
         echo "Created course ${ID} '${SURNAME} Practice Course'"
         # enrol user as instructor and a test student
         # set the course start date to the past, no end date, & make it visible
         # 1628406000 => 2021-08-08 00:00 PT
-        /usr/bin/moosh -n course-enrol -r editingteacher -s ${COURSE_ID} ${USERNAME} \
-        && /usr/bin/moosh -n course-enrol -s ${COURSE_ID} stest \
-        && /usr/bin/moosh -n course-config-set course ${ID} startdate 1628406000 \
-        && /usr/bin/moosh -n course-config-set course ${ID} enddate 0 \
-        && /usr/bin/moosh -n course-config-set course ${ID} visible 1 \
+        /usr/bin/moosh -n course-enrol -r editingteacher -s "${COURSE_ID}" "${USERNAME}" \
+        && /usr/bin/moosh -n course-enrol -s "${COURSE_ID}" stest \
+        && /usr/bin/moosh -n course-config-set course "${ID}" startdate 1628406000 \
+        && /usr/bin/moosh -n course-config-set course "${ID}" enddate 0 \
+        && /usr/bin/moosh -n course-config-set course "${ID}" visible 1 \
         && echo "Successfully created & configured practice course for ${USERNAME}"
     fi
 }
 
 # case 1: first argument is a CSV of faculty
-if [[ -f $1 ]]; then
-    IFS=$'\n'
-    for LINE in $(cat $1); do
-        if [[ ! -z ${LINE} ]]; then
+if [[ -f "$1" ]]; then
+    grep -v '^ *#' "$1" | while IFS= read -r LINE; do
+        if [[ -n ${LINE} ]]; then
             USERNAME=$(echo "${LINE}" | cut -d , -f 1)
             SURNAME=$(echo "${LINE}" | cut -d , -f 2)
-            create_course ${USERNAME} "${SURNAME}"
+            create_course "${USERNAME}" "${SURNAME}"
         fi
     done
 else
     # case 2: only a single course
-    create_course $1 "$2"
+    create_course "$1" "$2"
 fi
