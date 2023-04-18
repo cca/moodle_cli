@@ -27,7 +27,7 @@ fi
 
 cd /bitnami/moodle || exit
 # Ensure moosh is on PATH
-export PATH=${PATH}:/usr/bin
+export PATH=${PATH}:/usr/bin:/usr/local/bin
 
 echo "Enrolling user ${USER} in all ${SEMESTER} ${PROGRAM} courses with role ${ROLE}"
 
