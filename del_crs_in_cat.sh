@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# @TODO is this script needed? Deleting a category from the admin UI
+# can also delete all its child courses.
 # delete all courses in a category, usage:
 # ./del-crs-in-cat.sh $CATEGORY_NAME
 moosh () { /usr/bin/moosh -n $@; }
