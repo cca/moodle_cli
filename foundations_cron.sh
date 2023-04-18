@@ -21,3 +21,6 @@ done
 
 # see note at bottom of enrollment_cron.sh for explanation
 find /opt/moodledata -user root -exec chown daemon {} \;
+
+echo "$(date) - foundations script finished"
+echo
