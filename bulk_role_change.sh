@@ -8,14 +8,14 @@ ROLE=${MOODLE_ROLE:-exportonlyteacher}
 # default to Course Templates > Program Templates category
 CATEGORY=${MOODLE_CATEGORY:-877}
 
-COURSES=$(moosh course-list -c "${CATEGORY}" -i)
+COURSES=$(moosh -n course-list -c "${CATEGORY}" -i)
 
 for COURSE in ${COURSES[@]}; do
     # get all enrolled users, unenroll them, re-enroll them in the chosen role
     echo "Setting all users enrolled in course ID ${COURSE} to '${ROLE}'"
-    IDS=$(moosh user-list -i --course="${COURSE}")
+    IDS=$(moosh -n user-list -i --course="${COURSE}")
     if [[ -n $IDS ]]; then
-        moosh course-unenrol "${COURSE}" ${IDS}
-        moosh course-enrol -r "${ROLE}" -i "${COURSE}" ${IDS}
+        moosh -n course-unenrol "${COURSE}" ${IDS}
+        moosh -n course-enrol -r "${ROLE}" -i "${COURSE}" ${IDS}
     fi
 done

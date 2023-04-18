@@ -11,5 +11,5 @@ if [ -z "${START}" ] || [ -z "${END}" ]; then
     exit 1
 fi
 
-moosh course-config-set category "${CATEGORY}" startdate "${START}"
-moosh course-config-set category "${CATEGORY}" enddate "${END}"
+moosh -n course-config-set category "${CATEGORY}" startdate "${START}"
+moosh -n course-config-set category "${CATEGORY}" enddate "${END}"
