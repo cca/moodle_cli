@@ -15,7 +15,9 @@ surname pairs separated by commas, e.g., 'ephetteplace,Phetteplace'."
     exit 0
 fi
 
-SANDBOXES_CATEGORY_ID="${MOODLE_CATEGORY:-1115}"
+# moosh category-list claims it can accept a "search" parameter but
+# in my testing that did not work so this is the best we can do
+SANDBOXES_CATEGORY_ID=$(moosh -n category-list | grep FOUNDATIONS | cut -f 1 -d ' ')
 
 create_course () {
     USERNAME="$1"
