@@ -6,8 +6,6 @@ END=$2
 # default to Course Templates > Program Templates category
 CATEGORY=${CATEGORY:-877}
 
-moosh () { /usr/bin/moosh -n $@; }
-
 if [ -z "${START}" ] || [ -z "${END}" ]; then
     echo -e 'Error: you must provide both a start and end date in UNIX timestamps. Category defaults to 877 (Program Templates). Usage example:\n\n\tCATEGORY=877 ./set-course-date.sh 1610956800 1621061940' >&2
     exit 1
