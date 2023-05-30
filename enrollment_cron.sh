@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-export PATH="/opt/bitnami/php/bin:$PATH"
+export PATH="/opt/bitnami/php/bin:/usr/bin:/usr/local/bin:$PATH"
 export TZ="America/Los_Angeles"
 
 # we silence these common but harmless errors (or else the log file fills up)
