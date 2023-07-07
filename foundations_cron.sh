@@ -8,7 +8,7 @@ export TZ="America/Los_Angeles"
 cd /bitnami/moodle || (echo "Error: unable to cd into /bitnami/moodle, does directory exist?" >&2 || exit)
 # List of student usernames, ignoring test accounts
 # NOTE: `sed` must use extended regular expressions (-E)
-FOUNDATIONS_ID=$(moosh -n course-list -i "fullname LIKE '%Moodle Foundations%'")
+FOUNDATIONS_ID=$(moosh -n course-list -i "shortname = 'Moodle-Foundations-101'")
 STUDENTS=$(moosh -n user-list --course ${FOUNDATIONS_ID} --course-role student \
     | cut -f 1 -d ' ' | sed -E '/^(s|f)test1?$/d')
 
