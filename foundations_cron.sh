@@ -9,11 +9,11 @@ cd /bitnami/moodle || (echo "Error: unable to cd into /bitnami/moodle, does dire
 # List of student usernames, ignoring test accounts
 # ! `sed` must use extended regular expressions (-E)
 FOUNDATIONS_ID=$(moosh -n course-list -i "shortname = 'Moodle-Foundations-101'")
-STUDENTS=$(moosh -n user-list --course ${FOUNDATIONS_ID} --course-role student \
+STUDENTS=$(moosh -n user-list --course "${FOUNDATIONS_ID}" --course-role student \
     | cut -f 1 -d ' ' | sed -E '/^(s|f)test1?$/d')
 
 date
-echo "Creating practice courses for Moodle Foundations. There are" $(echo "${STUDENTS}" | wc -w) "students."
+echo "Creating practice courses for Moodle Foundations. There are" "$(echo "${STUDENTS}" | wc -w)" "students."
 
 for STUDENT in ${STUDENTS}; do
     /bitnami/moodle/admin/cca_cli/foundations.sh "${STUDENT}"
