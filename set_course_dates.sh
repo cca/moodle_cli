@@ -5,19 +5,16 @@
 # Bash strict mode
 set -euo pipefail
 
-START=$1
-END=$2
-# default to Course Templates > Program Templates category
-CATEGORY=${CATEGORY:-877}
-
+# convert dates to UNIX timestamps
 date_to_unix() {
-    # convert timestamp to PST
-    date -d "$1" +%s | awk '{print $1 - 8*60*60}'
+    date -d "$1" +%s
 }
 
-# convert dates to UNIX timestamps
-START=$(date_to_unix "${START}")
-END=$(date_to_unix "${END}")
+export TZ="America/Los_Angeles"
+# default to Course Templates > Program Templates category
+CATEGORY=${CATEGORY:-877}
+START=$(date_to_unix "$1")
+END=$(date_to_unix "$2")
 
 moosh -n course-config-set category "${CATEGORY}" startdate "${START}"
 moosh -n course-config-set category "${CATEGORY}" enddate "${END}"
