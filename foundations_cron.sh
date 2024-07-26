@@ -8,8 +8,9 @@ cd /bitnami/moodle || (echo "Error: unable to cd into /bitnami/moodle, does dire
 # List of student usernames, ignoring test accounts
 # ! `sed` must use extended regular expressions (-E)
 FOUNDATIONS_ID=$(moosh -n course-list -i "shortname = 'Moodle-Foundations-101'")
+# omit test students even though these are usually in an EOI & not student role
 STUDENTS=$(moosh -n user-list --course "${FOUNDATIONS_ID}" --course-role student \
-    | cut -f 1 -d ' ' | sed -E '/^(s|f)test1?$/d')
+    | cut -f 1 -d ' ' | sed -E '/^library-test-/d')
 
 date
 echo "Creating practice courses for Moodle Foundations. There are" "$(echo "${STUDENTS}" | wc -w)" "students."
