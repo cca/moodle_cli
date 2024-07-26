@@ -11,10 +11,13 @@ date_to_unix() {
 }
 
 export TZ="America/Los_Angeles"
-# default to Course Templates > Program Templates category
+# default to Course Templates > Program Templates category & our Starter Course
 CATEGORY=${CATEGORY:-877}
+STARTER_COURSE=${STARTER_COURSE:-1085}
 START=$(date_to_unix "$1")
 END=$(date_to_unix "$2")
 
+moosh -n course-config-set course "${STARTER_COURSE}" startdate "${START}"
+moosh -n course-config-set course "${STARTER_COURSE}" enddate "${END}"
 moosh -n course-config-set category "${CATEGORY}" startdate "${START}"
 moosh -n course-config-set category "${CATEGORY}" enddate "${END}"
