@@ -2,6 +2,7 @@
 # enroll a user in all of a program's courses in a particular semester
 # including metacourses
 usage () {
+    # shellcheck disable=SC2016
     echo -e 'Usage:\n\t./enroll_in_all.sh $SEMESTER $PROGRAM $USER [ $ROLE ]\n'
     echo -e 'Examples:\n\t./enroll_in_all.sh 2022SP GAMES ephetteplace'
     echo -e '\t./enroll_in_all.sh 2022FA ANIMA nchan exportonlyteacher\n'
