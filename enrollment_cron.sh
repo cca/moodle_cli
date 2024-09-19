@@ -3,28 +3,20 @@
 export PATH="/opt/bitnami/php/bin:/usr/bin:/usr/local/bin:$PATH"
 export TZ="America/Los_Angeles"
 
-# we silence these common but harmless errors (or else the log file fills up)
-CAS_MSG="user with this username was already created through 'cas' plugin."
-UN_MSG="error: skipping unknown user username "
-
 cd /bitnami/moodle || (echo "Error: unable to cd into /bitnami/moodle, does directory exist?" >&2; exit)
 echo "$(date) - running Moodle enrollment script"
 echo 'Setting "unenroll action" to "unenroll user from course"'
 moosh -n config-set unenrolaction 0 enrol_database
-# we sync users first and then enrollments
-# we enable auth db plugin to sync users, then disable it because we won't want
-# people actually signing in via external database
-# we'll change all their accounts to CAS later
-moosh -n auth-manage enable db
-php admin/cli/scheduled_task.php --execute='\auth_db\task\sync_users' | sed "/$CAS_MSG/d"
-moosh -n auth-manage disable db
-php admin/cca_cli/cca_set_cas_logins.php
+# this script no longer syncs users from the external database
+# users are created when they login by the auth_saml2 plugin
 
 # ensure local course template plugin is configured to overwrite course configuration
 # or else only some of our template courses' settings aren't inherited
 sed -i "s/'overwrite_conf' => 0/'overwrite_conf' => 1/" local/course_template/classes/backup.php \
     || (echo "Error: unable to ensure overwrite_conf = true in local/course_template plugin. Exiting without synchronizing enrollments." >&2; exit)
 
+# silence common but harmless error (numeric username accounts, often in EXT courses)
+UN_MSG="error: skipping unknown user username "
 php admin/cli/scheduled_task.php --execute='\enrol_database\task\sync_enrolments' | sed "/$UN_MSG/d"
 echo 'Setting "unenroll action" back to "keep user enrolled"'
 moosh -n config-set unenrolaction 1 enrol_database

@@ -4,11 +4,11 @@ Misc command-line management scripts and web assets for Moodle. Install these to
 
 ## Cronjobs on Kubernetes
 
-We cannot configure our Moodle cronjobs as kubernetes cronjobs, instead they are run by a combination of being copied into the system cron folders or manually added to a crontab by running a shell on the container and running `crontab -e`. The latter method needs to be re-applied each time the Moodle application is rebuilt. Below, we detail a few tricky issues which didn't exist on our locally hosted Moodle instances.
+We cannot configure our Moodle cronjobs as kubernetes cronjobs, instead they are copied into the system cron folders in our Dockerfile. Below, we detail a few tricky issues which didn't exist on our locally hosted Moodle instances.
 
 **Check the cron PATH**. We can run a test job like `echo $PATH >> test.txt` or `which php >> test.txt`. The execution context of a shell on the container is not the same as cron's. In particular, cron uses the system php `/usr/bin/php` which is missing some necessary modules, while login shells (and Moodle itself) use Bitnami's packaged php `/opt/bitnami/php/bin/php`. There are several ways to address this problem but we've added the shell's `PATH` to the top of the crontab, like `PATH=/opt/bitnami/php/bin:/opt/bitnami/php/sbin:...`. Note that you cannot use shell expansion, `PATH=/opt/bitnami/php/bin:$PATH` does not work, nor does running cron scripts as a login shell with `bash -lc {/path/to/script.sh}`.
 
-The system crontab has an extra field, the name of the user that executes the job. Normally, crontabs have six fields: five temporal ones and the command to run. The system cron has five temporal fields, the user, and finally the command. Bitnami Moodle provides a "daemon" user to run scheduled jobs, so running Moodle's cron every minute looks like `* * * * * daemon /opt/bitnami/php/bin/php /opt/bitnami/moodle/admin/cli/cron.php` (note the full path to Bitnami's PHP to address the problem described above).
+The system crontab has an extra field, the name of the user that executes the job. Normally, crontabs have six fields: five temporal ones and the command to run. The system cron has five temporal fields, the user, and finally the command. Bitnami Moodle runs as a "daemon" user, so running Moodle's cron every minute looks like `* * * * * daemon /opt/bitnami/php/bin/php /bitnami/moodle/admin/cli/cron.php` (note the full path to Bitnami's PHP to address the problem described above).
 
 ## CLI
 
@@ -18,17 +18,13 @@ These are various maintenance scripts meant to be run on the Moodle server. Most
 
 Change all users enrolled in courses in a particular category to a particular role. The `MOODLE_CATEGORY` and `MOODLE_ROLE` environment variables are used for these two values and they default to 877 (Templates > Program Templates) and `exportonlyteacher` because the primary application of this script is to turn editorial access to template courses on and off according to our deadlines.
 
-### cca_set_cas_logins.php
-
-Sets all logins to type `cas` except for the "guest" and "etadmin" users. Needed because Moodle's "external database enrollment" plugin sets all to "db" with no config option, so we run this in the enrollment script after syncing with the enrollment database.
-
 ### create_course_cats.php
 
 This creates all the needed course categories for a term (e.g. the parent semester category and then all the children departmental categories as well as the "Metacourses" category), with a prompt asking you to specify the term on the command line. We run this once per term a few months before it begins; it is a prerequisite to the term being added to the `MOODLE_ENROLLER_TERMS` setting on the CCA Integrations project which populates our external enrollments database.
 
 ### enrollment_cron.sh
 
-Cron calls this script which uses a few `moosh` commands, the auth/db/cli/sync_users.php script, and the enrol/database/cli/sync.php script to sync our enrollments with the external enrollments database.
+Cron calls this script which uses a few `moosh` commands and the enrol/database/cli/sync.php script to sync our enrollments with the external enrollments database.
 
 ### foundations_cron.sh
 
