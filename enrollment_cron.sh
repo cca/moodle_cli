@@ -35,7 +35,7 @@ echo 'Checking users for instructors who are not in the FACULTY cohort...'
 #     [id] => 25152
 # )
 # so we use `sed` to get only the user ID numbers
-USERS=$(moosh -n sql-run 'SELECT user.id FROM {user} user JOIN {role_assignments} ra ON user.id = ra.userid JOIN (SELECT * FROM {context} WHERE contextlevel = 50) context ON ra.contextid = context.id JOIN {role} role ON ra.roleid = role.id LEFT JOIN (SELECT cms.id, cms.userid FROM {cohort_members} cms JOIN {cohort} coh ON cms.cohortid = coh.id WHERE coh.name = "Faculty" OR coh.name = "Faculty Exceptions") cm ON user.id = cm.userid WHERE role.id = 3 AND cm.id IS NULL GROUP BY username ORDER BY username ASC' | sed -n "/\[id\] =>/s/ \+\[id\] => //p")
+USERS=$(moosh -n sql-run 'SELECT user.id FROM {user} user JOIN {role_assignments} ra ON user.id = ra.userid JOIN (SELECT * FROM {context} WHERE contextlevel = 50) context ON ra.contextid = context.id JOIN {role} role ON ra.roleid = role.id LEFT JOIN (SELECT cms.id, cms.userid FROM {cohort_members} cms JOIN {cohort} coh ON cms.cohortid = coh.id WHERE coh.name = "Faculty" OR coh.name = "Faculty Exceptions") cm ON user.id = cm.userid WHERE role.shortname = "editingteacher" AND cm.id IS NULL GROUP BY username ORDER BY username ASC' | sed -n "/\[id\] =>/s/ \+\[id\] => //p")
 
 if test -n "${USERS}"; then
     echo "Found $(echo "${USERS}" | wc -l) missing faculty."
