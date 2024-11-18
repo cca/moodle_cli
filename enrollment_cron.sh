@@ -11,7 +11,7 @@ moosh -n config-set unenrolaction 0 enrol_database
 # users are created when they login by the auth_saml2 plugin
 
 # ensure local course template plugin is configured to overwrite course configuration
-# or else only some of our template courses' settings aren't inherited
+# or else only some of our template courses' settings are inherited
 sed -i "s/'overwrite_conf' => 0/'overwrite_conf' => 1/" local/course_template/classes/backup.php \
     || (echo "Error: unable to ensure overwrite_conf = true in local/course_template plugin. Exiting without synchronizing enrollments." >&2; exit)
 

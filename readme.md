@@ -26,6 +26,8 @@ This creates all the needed course categories for a term (e.g. the parent semest
 
 Cron calls this script which uses a few `moosh` commands and the enrol/database/cli/sync.php script to sync our enrollments with the external enrollments database.
 
+We run this script manually for the initial sync of a semester. However, it takes a long time on the first run (so many courses to create) and problems can occur if it is interrupted (duplicate enrollment instances). Run in a safe manner like `nohup bash admin/cca_cli/enrollment_cron.sh >> /bitnami/moodledata/enroll.log &`. You can `tail -f enroll.log` to see messages.
+
 ### foundations_cron.sh
 
 Meant to run nightly, creates practice courses for everyone enrolled in the Moodle Foundations course (id = 2116) in a `student` role. This script uses `moosh user-list` to retrieve the student enrollments and passes the results to the foundations.sh script below.
