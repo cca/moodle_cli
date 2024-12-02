@@ -1,4 +1,5 @@
 #!/usr/bin/env fish
+# given list of file paths, delete them
 set file $argv[1]
 set -gx NS moo-prod
 
