@@ -4,6 +4,8 @@
 // in the database). Usage:
 // php admin/cca_cli/orphaned_local_files.php --hash=abced...
 // php admin/cca_cli/orphaned_local_files.php --file=hashes.txt
+// `moosh -n file-dbcheck` checks for "files present on disk but not in the DB"
+// so it does something similar (no object check)
 
 /**
  * @package    admin
