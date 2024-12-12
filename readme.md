@@ -22,6 +22,10 @@ Change all users enrolled in courses in a particular category to a particular ro
 
 This creates all the needed course categories for a term (e.g. the parent semester category and then all the children departmental categories as well as the "Metacourses" category), with a prompt asking you to specify the term on the command line. We run this once per term a few months before it begins; it is a prerequisite to the term being added to the `MOODLE_ENROLLER_TERMS` setting on the CCA Integrations project which populates our external enrollments database.
 
+### enroll_in_all.sh
+
+Enroll a user in all of a program's courses in a given term. Usage: `./enroll_in_all.sh $SEMESTER $PROGRAM $USER [ $ROLE ]`. Role defaults to Instructor if not provided.
+
 ### enrollment_cron.sh
 
 Cron calls this script which uses a few `moosh` commands and the enrol/database/cli/sync.php script to sync our enrollments with the external enrollments database.
@@ -35,10 +39,6 @@ Meant to run nightly, creates practice courses for everyone enrolled in the Mood
 ### foundations.sh
 
 Create Moodle Foundations "practice courses" for faculty members. The script has two modes: you can pass it a username and surname for it to create a single practice course or you can pass it a CSV of username/surname pairs to create a set of them. The username is used in the shortname so duplicates are not created; the surname is used in the course title and, if not provided, it defaults back to the username.
-
-### sandbox.sh
-
-Create a "sandbox" (test) course site for a particular CCA program. You pass the program department code, name, and optionally the username of an managing instructor to the script.
 
 ### set_course_date.sh
 
