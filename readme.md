@@ -32,13 +32,17 @@ Cron calls this script which uses a few `moosh` commands and the enrol/database/
 
 We run this script manually for the initial sync of a semester. However, it takes a long time on the first run (so many courses to create) and problems can occur if it is interrupted (duplicate enrollment instances). Run in a safe manner like `nohup bash admin/cca_cli/enrollment_cron.sh >> /bitnami/moodledata/enroll.log &`. You can `tail -f enroll.log` to see messages.
 
+### exted_cron.sh
+
+Create practice courses for each student enrolled in the CCA Extension Moodle Essentials course. This script does not have its own cronjob but is run by foundations_cron.sh. In the future, it would be nice to make this use foundations.sh (perhaps renamed to something like "practice_course.sh") and eliminate the high amount of redundant code between the two.
+
 ### foundations_cron.sh
 
-Meant to run nightly, creates practice courses for everyone enrolled in the Moodle Foundations course (id = 2116) in a `student` role. This script uses `moosh user-list` to retrieve the student enrollments and passes the results to the foundations.sh script below.
+Meant to run nightly, creates practice courses for each student enrolled in the Moodle Foundations course. This script uses `moosh user-list` to retrieve the student enrollments and passes the results to the foundations.sh script below.
 
 ### foundations.sh
 
-Create Moodle Foundations "practice courses" for faculty members. The script has two modes: you can pass it a username and surname for it to create a single practice course or you can pass it a CSV of username/surname pairs to create a set of them. The username is used in the shortname so duplicates are not created; the surname is used in the course title and, if not provided, it defaults back to the username.
+Create a single Moodle Foundation "practice course" in a provided category for a given username.
 
 ### set_course_date.sh
 

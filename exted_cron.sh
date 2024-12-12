@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Create practice courses for all students enrolled in CCA Extension Moodle Essentials
 # https://moodle.cca.edu/course/edit.php?id=7411 based on foundations scripts
-# Runs on a nightly schedule
+# Runs on a nightly schedule as part of foundations_cron.sh
 export PATH="/opt/bitnami/php/bin:/usr/bin:/usr/local/bin:$PATH"
 export TZ="America/Los_Angeles"
 cd /bitnami/moodle || (echo "Error: unable to cd into /bitnami/moodle, does directory exist?" >&2 || exit 1)
@@ -51,9 +51,3 @@ create_course () {
 for STUDENT in ${STUDENTS}; do
     create_course "$STUDENT"
 done
-
-# see note at bottom of enrollment_cron.sh for explanation
-find /opt/moodledata -user root -exec chown daemon {} \;
-
-echo "$(date) - exted script done"
-echo

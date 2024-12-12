@@ -24,6 +24,9 @@ for STUDENT in ${STUDENTS}; do
     /bitnami/moodle/admin/cca_cli/foundations.sh "${SANDBOXES_CATEGORY_ID}" "${STUDENT}"
 done
 
+# Run extensions practice course script as a sub-task
+/bitnami/moodle/admin/cca_cli/exted_cron.sh
+
 # see note at bottom of enrollment_cron.sh for explanation
 find /opt/moodledata -user root -exec chown daemon {} \;
 
