@@ -22,11 +22,13 @@ require_once($CFG->libdir.'/clilib.php');
 
 list($options, $unrecognized) = cli_get_params(
     [
+        'delete' => false,
+        'hash' => false,
         'help' => false,
         'file' => false,
-        'hash' => false,
     ], [
         'h' => 'help',
+        'd' => 'delete',
         'f' => 'file',
     ]
 );
@@ -35,9 +37,13 @@ $help = <<<EOT
 Check a single hash or file of hashes for orphaned local files.
 
 Options:
- -h, --help                Print out this help
- -f=FILE, --file=FILE      Input text file with one hash on each line
- --hash=HASH               Check a single hash
+ -h, --help             Print out this help
+ -f=FILE, --file=FILE   Input text file with one hash on each line
+ --hash=HASH            Check a single hash
+ -d, --delete               Delete orphaned files over a week old. CAREFUL!
+
+If you are deleting files, you want your hashes to be complete file paths like
+/opt/moodledata/filedir/00/11/0011....
 
 EOT;
 
@@ -51,7 +57,10 @@ if ($options['help']) {
     exit(0);
 }
 
-cli_writeln('The following orphaned files exist locally in ' . $CFG->dataroot . '/filedir but are not in the files nor objectfs_objects database tables:');
+cli_writeln('The following orphaned files exist locally in ' . $CFG->dataroot . '/filedir but are not in the files nor objectfs_objects database tables.');
+if ($options['delete']) {
+    cli_writeln('They will be deleted if they are over a week old.');
+}
 
 function orphaned_hash(string $hash) {
     global $DB;
@@ -63,17 +72,37 @@ function orphaned_hash(string $hash) {
     return false;
 }
 
+function delete_if_old(string $path) {
+    $stat = stat($path);
+    // be conservative: take the newest of access, change, modified times
+    $age = max(array($stat["atime"], $stat["ctime"], $stat["mtime"]));
+    if ($age < strtotime("1 week ago")) {
+        cli_writeln('Deleting');
+        return unlink($path);
+    }
+    return false;
+}
+
 if ($options['hash']) {
-    if (orphaned_hash($options['hash'])) {
-        cli_writeln($options['hash']);
+    $path = $options['hash'];
+    $hash = end(explode(DIRECTORY_SEPARATOR, $options['hash']));
+    if (orphaned_hash($hash)) {
+        cli_writeln($path);
+        if ($options['delete']) {
+            delete_if_old($path);
+        }
     }
 } elseif ($options['file']) {
     // read file line by line
     $handle = fopen($options['file'], "r");
     if ($handle) {
-        while (($hash = fgets($handle)) !== false) {
+        while (($path = fgets($handle)) !== false) {
+            $hash = end(explode(DIRECTORY_SEPARATOR, $options['hash']));
             if (orphaned_hash($hash)) {
                 cli_write($hash);
+                if ($options['delete']) {
+                    delete_if_old($path);
+                }
             }
         }
     } else {
