@@ -9,7 +9,7 @@ cd /bitnami/moodle || (echo "Error: unable to cd into /bitnami/moodle, does dire
 REAL_AUTH_PLUGIN="saml2"
 ERR_MSG="user with this username was already created through '${REAL_AUTH_PLUGIN}' plugin."
 moosh -n auth-manage enable db
-php admin/cli/scheduled_task --execute=\\auth_db\\task\\sync_users | sed "/${ERR_MSG}/d"
+php admin/cli/scheduled_task.php --execute=\\auth_db\\task\\sync_users | sed "/${ERR_MSG}/d"
 moosh -n auth-manage disable db
 moosh -n sql-run "UPDATE {user} SET auth = '${REAL_AUTH_PLUGIN}' WHERE auth = 'db'"
 
