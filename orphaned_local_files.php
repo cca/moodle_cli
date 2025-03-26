@@ -108,7 +108,7 @@ function in_cloud(string $hash) {
     } else {
         if ($options['debug']) {
             cli_writeln($gs_path . ' does not exist or an error occurred.');
-            if (count($ouput) > 0) {
+            if (count($output) > 0) {
                 cli_writeln('Command output: ' . implode("\n", $output));
             }
         }
