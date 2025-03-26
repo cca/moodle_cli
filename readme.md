@@ -44,6 +44,25 @@ Meant to run nightly, creates practice courses for each student enrolled in the 
 
 Create a single Moodle Foundation "practice course" in a provided category for a given username.
 
+### orphaned_local_files.php
+
+We use the object file storage plugin to store uploaded files in cloud storage. We set the plugin's `sizethreshold` to 0 to upload _all_ files to cloud storage, yet our local data directory at `/opt/moodledata` has continued to grow in size. This script aims to identify files that exist in local storage which can be safely deleted.
+
+The script checks a file containing a list of hashes of local files to see if they are referenced in the database in the `mdl_files` and/or `mdl_tool_objectfs_objects` tables or check if they are in cloud storage, with the option to delete them if all checks pass.
+
+```sh
+# create a list of local files over two weeks old (could specify a minimum size with -size)
+find /opt/moodledata -type f -mtime +14 > /bitnami/moodledata/hashes.txt
+# deletes local files older than two weeks old with copies in cloud storage while
+php admin/cca_cli/orphaned_local_files.php --cloud -f=/bitnami/moodledata/hashes.txt
+# deletes local files not referenced anywhere in the database
+php admin/cca_cli/orphaned_local_files.php --local_table --objectfs_table -f=/bitnami/moodledata/hashes.txt
+# this is similar—checks for local files not in the db—but without checking against the objects table
+moosh -n file-dbcheck
+```
+
+The `--debug` flag prints more information and the `--delete` flag deletes the files _if they are more than two weeks old_.
+
 ### set_course_date.sh
 
 Set the start (first argument) & end (second argument) date for all courses within a category (the `CATEGORY` environment variable, which defaults to 877 for the Program Templates category). Both arguments should be UNIX timestamps. This script is useful for updating the dates of template courses for the next semester. If you want to enforce an end date for a whole semester (or other category), use the `moosh -n course-config-set category ${CATEGORY} enddate ${END}` command.
