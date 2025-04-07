@@ -47,9 +47,9 @@ There are three checking options represented by flags:
   --cloud           Check that the hash's file _is_ in cloud storage
 
 Examples:
-  php admin/cca_cli/orphaned_local_files.php --cloud -f=/bitnami/moodledata/hashes.txt
+  php admin/cca_cli/orphaned_local_files.php --cloud --delete -f=/bitnami/moodledata/hashes.txt
 deletes local files older than two weeks old with copies in cloud storage while
-  php admin/cca_cli/orphaned_local_files.php --local_table --objectfs_table -f=/tmp/hashes.txt
+  php admin/cca_cli/orphaned_local_files.php --local_table --objectfs_table --delete -f=/tmp/hashes.txt
 deletes local files not referenced anywhere in the database
 
 Other Options:
