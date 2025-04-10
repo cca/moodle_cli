@@ -52,11 +52,11 @@ The script checks a file containing a list of hashes of local files to see if th
 
 ```sh
 # create a list of local files over two weeks old (could specify a minimum size with -size)
-find /opt/moodledata -type f -mtime +14 > /bitnami/moodledata/hashes.txt
+find /opt/moodledata/filedir -type f -mtime +14 > /bitnami/moodledata/hashes.txt
 # deletes local files older than two weeks old with copies in cloud storage while
-php admin/cca_cli/orphaned_local_files.php --cloud -f=/bitnami/moodledata/hashes.txt
+php admin/cca_cli/orphaned_local_files.php --cloud --delete -f=/bitnami/moodledata/hashes.txt
 # deletes local files not referenced anywhere in the database
-php admin/cca_cli/orphaned_local_files.php --local_table --objectfs_table -f=/bitnami/moodledata/hashes.txt
+php admin/cca_cli/orphaned_local_files.php --local_table --objectfs_table --delete -f=/bitnami/moodledata/hashes.txt
 # this is similar—checks for local files not in the db—but without checking against the objects table
 moosh -n file-dbcheck
 ```
