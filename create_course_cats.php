@@ -21,7 +21,7 @@ require('/bitnami/moodle/config.php');
 // https://github.com/moodle/moodle/blob/MOODLE_310_STABLE/lib/clilib.php
 require_once($CFG->libdir.'/clilib.php');
 
-$categories = array('Metacourses', 'ANIMA', 'ARCHT', 'ARTED', 'CERAM', 'COMAR', 'COMIC', 'COMIX', 'CRAFT', 'CRITI', 'CRTSD', 'CURPR', 'DESGN', 'DSMBA', 'ETHSM', 'ETHST', 'EXCHG', 'EXTED', 'FASHN', 'FILMG', 'FILMS', 'FINAR', 'FNART', 'FURNT', 'FYCST', 'GAMES', 'GELCT', 'GLASS', 'GRAPH', 'HAAVC', 'ILLUS', 'INDIV', 'INDUS', 'INTER', 'IXDGR', 'IXDSN', 'KADZE', 'LITPA', 'MAARD', 'MARCH', 'METAL', 'MOBIL', 'PHCRT', 'PHOTO', 'PNTDR', 'PRECO', 'PRINT', 'SCIMA', 'SCULP', 'SSHIS', 'TEXTL', 'TRAVL', 'UDIST', 'VISCR', 'WRITE', 'WRLIT');
+$categories = array('Metacourses', 'ANIMA', 'ARCHT', 'ARTED', 'CERAM', 'CMDSN', 'COMAR', 'COMIC', 'COMIX', 'CRAFT', 'CRITI', 'CRTSD', 'CURPR', 'DESGN', 'DSMBA', 'ETHSM', 'ETHST', 'EXCHG', 'EXTED', 'FASHN', 'FILMG', 'FILMS', 'FINAR', 'FNART', 'FURNT', 'FYCST', 'GAMES', 'GELCT', 'GLASS', 'GRAPH', 'HAAVC', 'ILLUS', 'INDIV', 'INDUS', 'INTDS', 'INTER', 'IXDGR', 'IXDSN', 'KADZE', 'LITPA', 'MAARD', 'MARCH', 'METAL', 'MOBIL', 'PHCRT', 'PHOTO', 'PNTDR', 'PRECO', 'PRINT', 'SCIMA', 'SCULP', 'SSHIS', 'TEXTL', 'TRAVL', 'UDIST', 'VISCR', 'WRITE', 'WRLIT');
 
 if (isset($argv[1])) {
     $semester_str = trim($argv[1]);
