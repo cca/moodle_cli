@@ -12,7 +12,18 @@ The system crontab has an extra field, the name of the user that executes the jo
 
 ## CLI
 
-These are various maintenance scripts meant to be run on the Moodle server. Most are not in use and have been moved to the "unused" folder. Many can be replaced with one-off `moosh` commands.
+These are various maintenance scripts meant to be run on the Moodle server. Most are not in use and have been moved to the "unused" folder. Many can be replaced with one-off `moosh` commands. Every `moosh` command needs the `-n` flag because the user that owns Moodle files is not the one running the script.
+
+### unenroll all students from a course
+
+Not a script but this is a single command with `moosh`:
+
+```sh
+# where 2666 is the course ID number
+moosh -n course-unenrol 2666 $(moosh -n user-list --course 2666 --course-role student -i)
+```
+
+Obviously, the `--course-role` could be changed or removed (to unenroll everyone).
 
 ### bulk-role-change.sh
 
