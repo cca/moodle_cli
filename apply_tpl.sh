@@ -89,6 +89,8 @@ for COURSE in "${COURSES[@]}"; do
     echo "Restoring the template into course ${COURSE}"
     # the --existing flag would merge the backup instead of overwriting
     nice moosh -n course-restore --overwrite "${BACKUP_FILE}" "${COURSE}"
+    # main admin (ephetteplace) is automatically enrolled in every restore
+    nice moosh -n course-unenrol "${COURSE}" "$(nice moosh -n user-list --id "username = 'ephetteplace'")"
 done
 
 echo "Done. You may want to delete the backup file: ${BACKUP_FILE}"
