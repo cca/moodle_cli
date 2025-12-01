@@ -39,9 +39,9 @@ Enroll a user in all of a program's courses in a given term. Usage: `./enroll_in
 
 ### enrollment_cron.sh
 
-Cron calls this script which uses a few `moosh` commands and the enrol/database/cli/sync.php script to sync our enrollments with the external enrollments database.
+Cron calls this script which uses a few `moosh` commands and the enrol/database/cli/sync.php script to sync our enrollments and users with the external Moodle Support Database. There is a `--no-users` flag to skip the user sync sub-task if desired.
 
-We run this script manually for the initial sync of a semester. However, it takes a long time on the first run (so many courses to create) and problems can occur if it is interrupted (duplicate enrollment instances). Run in a safe manner like `nohup bash admin/cca_cli/enrollment_cron.sh >> /bitnami/moodledata/enroll.log &`. You can `tail -f enroll.log` to see messages.
+We run this script manually for the initial sync of a semester. However, it takes a long time on the first run (so many courses to create) and problems can occur if it is interrupted (duplicate enrollment instances). Run it in a safe manner like `nohup bash admin/cca_cli/enrollment_cron.sh --no-users >> /bitnami/moodledata/enroll.log &`. You can `tail -f enroll.log` to see messages.
 
 ### exted_cron.sh
 

@@ -6,7 +6,12 @@ export TZ="America/Los_Angeles"
 cd /bitnami/moodle || (echo "Error: unable to cd into /bitnami/moodle, does directory exist?" >&2; exit)
 echo "$(date) - running Moodle enrollment script"
 
-/bitnami/moodle/admin/cca_cli/user_sync.sh # user sync sub-task
+# user sync sub-task
+if test "$1" = "--no-users"; then
+    echo "Skipping user sync as --no-users flag was given."
+else
+    /bitnami/moodle/admin/cca_cli/user_sync.sh
+fi
 
 echo 'Setting "unenroll action" to "unenroll user from course"'
 moosh -n config-set unenrolaction 0 enrol_database
