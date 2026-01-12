@@ -5,14 +5,15 @@
 export PATH="/opt/bitnami/php/bin:/usr/bin:/usr/local/bin:$PATH"
 export TZ="America/Los_Angeles"
 cd /bitnami/moodle || (echo "Error: unable to cd into /bitnami/moodle, does directory exist?" >&2 || exit)
-# List of student usernames, ignoring test accounts
-# ! `sed` must use extended regular expressions (-E)
+
 FOUNDATIONS_ID=$(moosh -n course-list -i "shortname = 'Moodle-Foundations-101'")
 if [[ -z "$FOUNDATIONS_ID" ]]; then
     echo "Error: unable to find Moodle Foundations course." >&2
     exit 1
 fi
+
 # omit test students even though these are usually in an EOI & not student role
+# ! `sed` must use extended regular expressions (-E)
 STUDENTS=$(moosh -n user-list --course "${FOUNDATIONS_ID}" --course-role student \
     | cut -f 1 -d ' ' | sed -E '/^library-test-/d')
 SANDBOXES_CATEGORY_ID=$(moosh -n category-list FOUNDATIONS | grep FOUNDATIONS | cut -f 1 -d ' ')

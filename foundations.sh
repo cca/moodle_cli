@@ -4,31 +4,37 @@
 create_course () {
     CATEGORY="$1"
     USERNAME="$2"
-    COURSE_ID="SANDBOX-${USERNAME}"
+    SHORTNAME="SANDBOX-${USERNAME}"
 
-    EXISTING_COURSE=$(moosh -n course-list "shortname = '$COURSE_ID'" | tr -d '\n')
+    EXISTING_COURSE=$(moosh -n course-list "shortname = '$SHORTNAME'" | tr -d '\n')
     if [[ -n "$EXISTING_COURSE" ]]; then
+        # we do not print a message because this happens for every pre-existing user
         return 0
     fi
 
-    # create a course & store the created ID number, which we have to `grep`
-    # for because moosh includes error text in stdout
-    ID=$(moosh -n course-create --category="${CATEGORY}" \
+    # Create the course. Command output has ID but parsing it is a trap,
+    # so we run a separate moosh command below to find its ID.
+    moosh -n course-create --category="${CATEGORY}" \
         --fullname="${USERNAME} Practice Course" \
-        --idnumber="${COURSE_ID}" "${COURSE_ID}" 2>/dev/null | grep -x '^[0-9]*$')
+        --idnumber="${SHORTNAME}" "${SHORTNAME}"
 
-    # if we created a new course, configure it
-    if [[ $? && -n "${ID}" ]]; then
+    # Get the ID of the newly created course, this returns 0 even if there are no matches.
+    ID=$(moosh -n course-list --id "shortname = '$SHORTNAME'")
+
+    # If we found the newly created course, configure it.
+    if [[ -n "${ID}" ]]; then
         echo "Created course ${ID} ${USERNAME} Practice Course"
         # enrol user as instructor and a test student
         # set the course start date to the past, no end date, & make it visible
         # 1628406000 => 2021-08-08 00:00 PT
-        moosh -n course-enrol -r editingteacher -s "${COURSE_ID}" "${USERNAME}" \
-        && moosh -n course-enrol -s "${COURSE_ID}" library-test-student-1 \
+        moosh -n course-enrol -r editingteacher -s "${SHORTNAME}" "${USERNAME}" \
+        && moosh -n course-enrol -s "${SHORTNAME}" library-test-student-1 \
         && moosh -n course-config-set course "${ID}" startdate 1628406000 \
         && moosh -n course-config-set course "${ID}" enddate 0 \
         && moosh -n course-config-set course "${ID}" visible 1 \
         && echo "Successfully created & configured practice course for ${USERNAME}"
+    else
+        echo "Error creating course ${SHORTNAME} ${USERNAME} Practice Course'"
     fi
 }
 

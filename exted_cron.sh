@@ -32,14 +32,17 @@ create_course () {
         return 0
     fi
 
-    # create a course & store the created ID number, which we have to `grep`
-    # for because moosh includes error text in stdout
-    ID=$(moosh -n course-create --category="${CATEGORY_ID}" \
+    # Create the course. Command output has ID but parsing it is a trap,
+    # so we run a separate moosh command below to find its ID.
+    moosh -n course-create --category="${CATEGORY_ID}" \
         --fullname="${USERNAME} Practice Course" \
-        --idnumber="${COURSE_SHORTNAME}" "${COURSE_SHORTNAME}" 2>/dev/null | grep -x '^[0-9]*$')
+        --idnumber="${COURSE_SHORTNAME}" "${COURSE_SHORTNAME}"
+
+    # Get the ID of the newly created course, this returns 0 even if there are no matches.
+    ID=$(moosh -n course-list --id "shortname = '$COURSE_SHORTNAME'")
 
     # if we created a new course, configure it
-    if [[ $? && -n "${ID}" ]]; then
+    if [[ -n "${ID}" ]]; then
         echo "Created course ${ID} '${USERNAME} Practice Course'"
         # enrol user as instructor
         moosh -n course-enrol -r editingteacher -s "${COURSE_SHORTNAME}" "${USERNAME}"
