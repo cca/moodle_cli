@@ -1,0 +1,41 @@
+name: Lint PHP and Shell Scripts
+
+on:
+  push:
+    paths:
+      - '**/*.php'
+      - '**/*.sh'
+  pull_request:
+    paths:
+      - '**/*.php'
+      - '**/*.sh'
+
+permissions:
+  contents: read
+  # Only allow read access to contents, no write or admin permissions
+
+jobs:
+  lint:
+    name: Lint PHP and Shell Scripts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: Set up PHP
+        uses: shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f # 2.37.0
+        with:
+          php-version: '8.2'
+      - name: Find PHP files
+        id: php_files
+        run: |
+          find . -type f -name '*.php' > php_files.txt || true
+      - name: Lint PHP files
+        if: ${{ steps.php_files.outputs.files != '' }}
+        run: |
+          if [ -s php_files.txt ]; then
+            xargs -a php_files.txt -r -n 1 php -l
+          else
+            echo "No PHP files to lint."
+          fi
+      - name: Run shellcheck
+        uses: ludeeus/action-shellcheck@00cae500b08a931fb5698e11e79bfbd38e612a38 # v2.0.0
